@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sav_project/screens/account_confirmation.dart';
+import 'package:sav_project/screens/confirmation_failure.dart';
+import 'package:sav_project/screens/confirmation_success.dart';
 import 'package:sav_project/screens/layout.dart';
 
 void main() {
@@ -23,7 +26,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color.fromARGB(255, 246, 248, 251),
       ),
       debugShowCheckedModeBanner: false,
-      home: const Layout(),
+      home: const ConfirmationSuccess(),
     );
   }
 }
