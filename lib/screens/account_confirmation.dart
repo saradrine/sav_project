@@ -32,6 +32,7 @@ class AccountConfirmation extends StatelessWidget {
                   image: AssetImage('assets/icons/mailOutlined.png'),
                   width: 100,
                   height: 100,
+                  color: Color.fromARGB(255, 93, 95, 102),
                 ),
                 SizedBox(height: 35),
                 Text(

@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color.fromARGB(255, 246, 248, 251),
       ),
       debugShowCheckedModeBanner: false,
-      home: const ConfirmationSuccess(),
+      home: const AccountConfirmation(),
     );
   }
 }
