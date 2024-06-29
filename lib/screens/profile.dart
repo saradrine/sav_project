@@ -43,6 +43,45 @@ class Profile extends StatelessWidget {
           ),
         ),
       ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Modifier mon profil",
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 3, 147, 136),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text("Nom et prénom"),
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                "Changer mot de passe",
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 3, 147, 136),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

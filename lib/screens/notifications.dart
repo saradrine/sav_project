@@ -109,7 +109,7 @@ class _NotificationsState extends State<Notifications> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 16),
         child: ListView(
           children: [
             if (getNouveauNotifications().isNotEmpty) ...[
