@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sav_project/screens/home.dart';
+import 'package:sav_project/screens/notifications.dart';
 import 'package:sav_project/screens/profile.dart';
 import 'package:sav_project/widgets/bottom_navbar.dart';
 
@@ -14,7 +15,7 @@ class _LayoutState extends State<Layout> {
   List pages = [
     Home(),
     Profile(),
-    Profile(),
+    Notifications(),
     Profile(),
     Profile(),
   ];
