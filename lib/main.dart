@@ -22,8 +22,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        fontFamily: 'PlayfairDisplay',
+        fontFamily: 'inter',
         scaffoldBackgroundColor: const Color.fromARGB(255, 246, 248, 251),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: const Color.fromARGB(255, 99, 99, 99), // Cursor color
+          selectionHandleColor:
+              const Color.fromARGB(255, 99, 99, 99), // Handle color
+        ),
       ),
       debugShowCheckedModeBanner: false,
       home: const Layout(),

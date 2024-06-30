@@ -42,44 +42,47 @@ class NotificationCard extends StatelessWidget {
                     children: [
                       if (notifications.indexOf(notification) > 0)
                         Divider(color: Colors.grey),
-                      Dismissible(
-                        key: Key(notification.hashCode.toString()),
-                        onDismissed: (direction) {
-                          onDismissed(notification);
-                        },
-                        direction: DismissDirection.endToStart,
-                        background: Container(
-                          color: Color.fromARGB(255, 185, 11, 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 16.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    ImageIcon(
-                                      AssetImage('assets/icons/delete.png'),
-                                      color: Colors.white,
-                                      size: 30,
-                                    ),
-                                    SizedBox(height: 6),
-                                    Text(
-                                      'Supprimer',
-                                      style: TextStyle(
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Dismissible(
+                          key: Key(notification.hashCode.toString()),
+                          onDismissed: (direction) {
+                            onDismissed(notification);
+                          },
+                          direction: DismissDirection.endToStart,
+                          background: Container(
+                            color: Color.fromARGB(255, 185, 11, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 16.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      ImageIcon(
+                                        AssetImage('assets/icons/delete.png'),
                                         color: Colors.white,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.bold,
+                                        size: 30,
                                       ),
-                                    ),
-                                  ],
+                                      SizedBox(height: 6),
+                                      Text(
+                                        'Supprimer',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
+                          child: NotificationDetail(notification: notification),
                         ),
-                        child: NotificationDetail(notification: notification),
                       ),
                     ],
                   ),

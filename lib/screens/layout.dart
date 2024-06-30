@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sav_project/screens/add_vehicule_screen.dart';
 import 'package:sav_project/screens/home.dart';
 import 'package:sav_project/screens/notifications.dart';
 import 'package:sav_project/screens/profile.dart';
@@ -14,8 +15,8 @@ class _LayoutState extends State<Layout> {
   int _selectedIndex = 0;
   List pages = [
     Home(),
-    Profile(),
     Notifications(),
+    AddVehiculeScreen(),
     Profile(),
     Profile(),
   ];
