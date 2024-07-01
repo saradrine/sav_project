@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sav_project/screens/add_vehicule_screen.dart';
+import 'package:sav_project/screens/historique.dart';
 import 'package:sav_project/widgets/navigation_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,6 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ),
-        body: AddVehiculeScreen());
+        body: HistoriqueScreen());
   }
 }
