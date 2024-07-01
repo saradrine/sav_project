@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:sav_project/screens/account_confirmation.dart';
 import 'package:sav_project/screens/confirmation_failure.dart';
 import 'package:sav_project/screens/confirmation_success.dart';
-import 'package:sav_project/screens/home_screen.dart';
 import 'package:sav_project/screens/layout.dart';
 
 void main() {
