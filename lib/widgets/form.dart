@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sav_project/widgets/button.dart';
+import 'package:sav_project/widgets/profile_form.dart';
 
 class FieldDetail {
   final String label;
@@ -11,7 +12,7 @@ class FieldDetail {
 
   FieldDetail(
       {required this.label,
-      required this.icon,
+      this.icon = '',
       this.height = 30,
       this.width = 30,
       required this.widgetType,
@@ -81,7 +82,7 @@ class FormWidgetState extends State<FormWidget> {
               ),
             ),
             SizedBox(
-              height: 100,
+              height: 20,
             )
           ],
         ),
@@ -90,7 +91,13 @@ class FormWidgetState extends State<FormWidget> {
   }
 }
 
-enum WidgetType { TextInputStyling, DropDownInputStyling }
+enum WidgetType {
+  TextInputStyling,
+  DropDownInputStyling,
+  PasswordInputStyling,
+  DateInputStyling,
+  TimeInputStyling,
+}
 
 class FieldInput extends StatelessWidget {
   const FieldInput({
@@ -148,13 +155,36 @@ class FieldInput extends StatelessWidget {
           ),
           child: widgetType == WidgetType.TextInputStyling
               ? TextInputStyling(
-                  icon: icon, height: height, width: width, label: label)
-              : DropDownInputStyling(
                   icon: icon,
                   height: height,
                   width: width,
                   label: label,
-                  items: items),
+                )
+              : widgetType == WidgetType.DropDownInputStyling
+                  ? DropDownInputStyling(
+                      icon: icon,
+                      height: height,
+                      width: width,
+                      label: label,
+                      items: items!,
+                    )
+                  : widgetType == WidgetType.PasswordInputStyling
+                      ? PasswordInputStyling(
+                          label: label,
+                        )
+                      : widgetType == WidgetType.DateInputStyling
+                          ? DateInputStyling(
+                              label: label,
+                              icon: icon,
+                              width: width,
+                              height: height,
+                            )
+                          : TimeInputStyling(
+                              label: label,
+                              icon: icon,
+                              width: width,
+                              height: height,
+                            ),
         ),
       ],
     );
@@ -281,6 +311,72 @@ class TextInputStyling extends StatelessWidget {
       // onSaved: (String value) {
       //   _marque = value;
       // },
+    );
+  }
+}
+
+class PasswordInputStyling extends StatefulWidget {
+  const PasswordInputStyling({
+    Key? key,
+    required this.label,
+    this.onChanged,
+  }) : super(key: key);
+
+  final String label;
+  final Function(String)? onChanged;
+
+  @override
+  _PasswordInputStylingState createState() => _PasswordInputStylingState();
+}
+
+class _PasswordInputStylingState extends State<PasswordInputStyling> {
+  bool _obscureText = true;
+
+  void _toggleVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      obscureText: _obscureText,
+      enableSuggestions: false,
+      autocorrect: false,
+      style: TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+      ),
+      decoration: InputDecoration(
+        hintText: "${widget.label}...",
+        hintStyle: TextStyle(
+          color: Colors.grey,
+        ),
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        suffixIcon: GestureDetector(
+          onTap: _toggleVisibility,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Image.asset(
+              _obscureText ? 'assets/icons/hide.png' : 'assets/icons/show.png',
+              width: 30,
+              height: 30,
+            ),
+          ),
+        ),
+        border: InputBorder.none,
+        filled: true,
+        fillColor: Colors.transparent,
+        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return '${widget.label} is required';
+        }
+        return null;
+      },
+      onChanged: widget.onChanged,
     );
   }
 }
