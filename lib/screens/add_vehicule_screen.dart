@@ -23,7 +23,7 @@ class _AddVehiculeScreenState extends State<AddVehiculeScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   height: 1.3,
-                  fontSize: 16,
+                  fontSize: 17,
                   fontWeight: FontWeight.bold,
                 ),
               ),

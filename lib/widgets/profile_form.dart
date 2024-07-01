@@ -197,8 +197,7 @@ class TextInputStyling extends StatelessWidget {
       ),
       style: TextStyle(
         color: Colors.black,
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
+        fontSize: 17,
       ),
       keyboardType: keyboardType,
       validator: (value) {
@@ -260,38 +259,48 @@ class _PhoneInputStylingState extends State<PhoneInputStyling> {
           ],
         ),
         ...phoneNumbers.skip(1).map((phone) => Padding(
-              padding: const EdgeInsets.only(left: 40.0, top: 8.0),
+              padding: const EdgeInsets.only(left: 40.0),
               child: Row(
                 children: [
                   Expanded(
-                    child: TextFormField(
-                      initialValue: phone,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Ajouter numéro de téléphone',
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 32),
+                      child: TextFormField(
+                        initialValue: phone,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Téléphone...',
+                        ),
+                        keyboardType: TextInputType.phone,
                       ),
-                      keyboardType: TextInputType.phone,
                     ),
                   ),
                 ],
               ),
             )),
-        Divider(
-          color: Colors.grey,
-          height: 1,
-        ),
-        TextButton.icon(
-          onPressed: () {
-            setState(() {
-              phoneNumbers.add('');
-            });
-          },
-          icon: Icon(Icons.add),
-          label: Text(
-            'Ajouter numéro de téléphone',
-            style: TextStyle(color: Colors.grey),
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Divider(
+            color: Colors.grey,
+            height: 1,
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: TextButton.icon(
+            onPressed: () {
+              setState(() {
+                phoneNumbers.add('');
+              });
+            },
+            icon: Icon(Icons.add, color: Colors.grey),
+            label: Text(
+              'Ajouter numéro de téléphone',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+        )
       ],
     );
   }

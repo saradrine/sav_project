@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:sav_project/screens/account_confirmation.dart';
 import 'package:sav_project/screens/confirmation_failure.dart';
 import 'package:sav_project/screens/confirmation_success.dart';
+import 'package:sav_project/screens/home_screen.dart';
 import 'package:sav_project/screens/layout.dart';
 
 void main() {
@@ -25,9 +26,8 @@ class MyApp extends StatelessWidget {
         fontFamily: 'inter',
         scaffoldBackgroundColor: const Color.fromARGB(255, 246, 248, 251),
         textSelectionTheme: TextSelectionThemeData(
-          cursorColor: const Color.fromARGB(255, 99, 99, 99), // Cursor color
-          selectionHandleColor:
-              const Color.fromARGB(255, 99, 99, 99), // Handle color
+          cursorColor: const Color.fromARGB(255, 99, 99, 99),
+          selectionHandleColor: const Color.fromARGB(255, 99, 99, 99),
         ),
       ),
       debugShowCheckedModeBanner: false,

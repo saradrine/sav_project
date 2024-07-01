@@ -107,8 +107,7 @@ class Field extends StatelessWidget {
                 child: Text(
                   content,
                   style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
+                    fontSize: 17,
                     color: Colors.black,
                   ),
                   overflow: TextOverflow.ellipsis,
