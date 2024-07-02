@@ -51,7 +51,12 @@ class NotificationCard extends StatelessWidget {
                           },
                           direction: DismissDirection.endToStart,
                           background: Container(
-                            color: Color.fromARGB(255, 185, 11, 0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Color.fromARGB(255, 185, 11, 0),
+                            ),
+                            margin: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.center,

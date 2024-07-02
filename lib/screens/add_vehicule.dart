@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sav_project/widgets/form.dart';
 
-class AddVehiculeScreen extends StatefulWidget {
-  const AddVehiculeScreen({super.key});
+class AddVehicule extends StatefulWidget {
+  const AddVehicule({super.key});
 
   @override
-  State<AddVehiculeScreen> createState() => _AddVehiculeScreenState();
+  State<AddVehicule> createState() => _AddVehiculeState();
 }
 
-class _AddVehiculeScreenState extends State<AddVehiculeScreen> {
+class _AddVehiculeState extends State<AddVehicule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:sav_project/screens/add_vehicule_screen.dart';
+import 'package:sav_project/screens/add_vehicule.dart';
 import 'package:sav_project/screens/appointment.dart';
 import 'package:sav_project/screens/home.dart';
+import 'package:sav_project/screens/my_vehicules.dart';
 import 'package:sav_project/screens/notifications.dart';
 import 'package:sav_project/screens/profile.dart';
 import 'package:sav_project/widgets/bottom_navbar.dart';
 import 'package:sav_project/widgets/navigation_drawer.dart';
+import 'package:sav_project/screens/historique.dart';
+import 'package:sav_project/screens/settings.dart';
 
 class Layout extends StatefulWidget {
-  const Layout({super.key});
+  final int initialIndex;
+
+  const Layout({super.key, this.initialIndex = 0});
 
   @override
   State<Layout> createState() => _LayoutState();
@@ -22,20 +27,42 @@ class _LayoutState extends State<Layout> {
 
   List pages = [
     Home(),
-    Notifications(),
-    //History(),
-    AddVehiculeScreen(),
+    MyVehicules(),
+    AddVehicule(),
     Appointment(),
+    Historique(),
     Profile(),
+    Notifications(),
+    Settings(),
   ];
 
   final List<String> titles = [
-    'Acceuill',
-    'Notifications',
-    'Ajouter véhicule',
+    'Accueil',
+    'Mes véhicules',
+    'Nouveau véhicule',
     'Rendez-vous',
+    'Historique',
     'Profil',
+    'Notifications',
+    'Paramètres',
   ];
+
+  final Map<String, int> drawerTitleToPageIndex = {
+    'Accueil': 0,
+    'Mes véhicules': 1,
+    'Nouveau véhicule': 2,
+    'Rendez-vous': 3,
+    'Historique': 4,
+    'Profil': 5,
+    'Notifications': 6,
+    'Paramètres': 7,
+  };
+
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex;
+    _lastIndex = widget.initialIndex;
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -59,11 +86,26 @@ class _LayoutState extends State<Layout> {
     });
   }
 
+  void _onDrawerItemTapped(String title) {
+    int? index = drawerTitleToPageIndex[title];
+    if (index != null) {
+      setState(() {
+        _selectedIndex = index;
+        _lastIndex = index;
+        _inNotifPage = false;
+      });
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: SideMenu(),
+      drawer: SideMenu(
+        selectedMenu: titles[_selectedIndex],
+        onMenuItemTapped: _onDrawerItemTapped,
+      ),
       appBar: _inNotifPage
           ? PreferredSize(
               preferredSize: Size.fromHeight(90),

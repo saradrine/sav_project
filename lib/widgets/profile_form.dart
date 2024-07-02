@@ -47,7 +47,16 @@ class _ProfileFormState extends State<ProfileForm> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ButtonStyled(
-                      formKey: _formKey,
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          // If the form is valid, display a snackbar. In the real world,
+                          // you'd often call a server or save the information in a database.
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Processing Data')),
+                          );
+                          // _formKey.currentState.save();
+                        }
+                      },
                       textColor: Colors.white,
                       backgroundColor: Color(0xFF039388),
                       text: 'Sauvegarder'),
@@ -55,7 +64,16 @@ class _ProfileFormState extends State<ProfileForm> {
                     width: 15,
                   ),
                   ButtonStyled(
-                      formKey: _formKey,
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          // If the form is valid, display a snackbar. In the real world,
+                          // you'd often call a server or save the information in a database.
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Processing Data')),
+                          );
+                          // _formKey.currentState.save();
+                        }
+                      },
                       textColor: Color(0xFF039388),
                       backgroundColor: Color(0xFFEEF0F3),
                       text: 'Annuler'),

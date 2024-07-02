@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:sav_project/widgets/button.dart';
 import 'package:sav_project/widgets/profile_form.dart';
 
+import 'drop_down_input_styling.dart';
+import 'password_input_styling.dart';
+import 'text_input_styling.dart' as TextInputStyling;
+
 class FieldDetail {
   final String label;
   final String icon;
@@ -66,7 +70,16 @@ class FormWidgetState extends State<FormWidget> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ButtonStyled(
-                      formKey: _formKey,
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          // If the form is valid, display a snackbar. In the real world,
+                          // you'd often call a server or save the information in a database.
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Processing Data')),
+                          );
+                          // _formKey.currentState.save();
+                        }
+                      },
                       textColor: Colors.white,
                       backgroundColor: Color(0xFF039388),
                       text: 'Sauvegarder'),
@@ -74,7 +87,16 @@ class FormWidgetState extends State<FormWidget> {
                     width: 15,
                   ),
                   ButtonStyled(
-                      formKey: _formKey,
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          // If the form is valid, display a snackbar. In the real world,
+                          // you'd often call a server or save the information in a database.
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Processing Data')),
+                          );
+                          // _formKey.currentState.save();
+                        }
+                      },
                       textColor: Color(0xFF039388),
                       backgroundColor: Color(0xFFEEF0F3),
                       text: 'Annuler'),
@@ -154,14 +176,14 @@ class FieldInput extends StatelessWidget {
             color: Colors.white,
           ),
           child: widgetType == WidgetType.TextInputStyling
-              ? TextInputStyling(
+              ? TextInputStyling.TextInputStyling(
                   icon: icon,
                   height: height,
                   width: width,
                   label: label,
                 )
               : widgetType == WidgetType.DropDownInputStyling
-                  ? DropDownInputStyling(
+                  ? CustomDropdown(
                       icon: icon,
                       height: height,
                       width: width,
@@ -187,196 +209,6 @@ class FieldInput extends StatelessWidget {
                             ),
         ),
       ],
-    );
-  }
-}
-
-class DropDownInputStyling extends StatelessWidget {
-  const DropDownInputStyling({
-    super.key,
-    required this.icon,
-    required this.height,
-    required this.width,
-    required this.label,
-    required this.items,
-  });
-
-  final String icon;
-  final double height;
-  final double width;
-  final String label;
-  final List<String> items;
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButtonFormField<String>(
-      icon: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Image.asset(
-          'assets/icons/down.png',
-          width: 35,
-          height: 35,
-        ),
-      ),
-      items: items.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-      onChanged: (String? newValue) {
-        // setState(() {
-        //   _selectedValue = newValue!;
-        // });
-      },
-      style: TextStyle(
-        color: Colors.black,
-        fontWeight: FontWeight.w500,
-      ),
-      decoration: InputDecoration(
-        hintText: "Choisis le $label",
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        prefixIcon: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Image.asset(
-            'assets/icons/' + icon,
-            width: width,
-            height: height,
-          ),
-        ),
-        border: InputBorder.none,
-        filled: true,
-        fillColor: Colors.transparent,
-        contentPadding: EdgeInsets.symmetric(vertical: (60 - height) / 2),
-      ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return label + 'is required';
-        }
-        return null;
-      },
-      // onSaved: (String value) {
-      //   _marque = value;
-      // },
-    );
-  }
-}
-
-class TextInputStyling extends StatelessWidget {
-  const TextInputStyling({
-    super.key,
-    required this.icon,
-    required this.height,
-    required this.width,
-    required this.label,
-  });
-
-  final String icon;
-  final double height;
-  final double width;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      style: TextStyle(
-        color: Colors.black,
-        fontWeight: FontWeight.w500,
-      ),
-      decoration: InputDecoration(
-        hintText: "$label...",
-        hintStyle: TextStyle(
-          color: Colors.grey,
-        ),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        prefixIcon: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Image.asset(
-            'assets/icons/' + icon,
-            width: width,
-            height: height,
-          ),
-        ),
-        border: InputBorder.none,
-        filled: true,
-        fillColor: Colors.transparent,
-        contentPadding: EdgeInsets.symmetric(vertical: (60 - height) / 2),
-      ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return label + 'is required';
-        }
-        return null;
-      },
-      // onSaved: (String value) {
-      //   _marque = value;
-      // },
-    );
-  }
-}
-
-class PasswordInputStyling extends StatefulWidget {
-  const PasswordInputStyling({
-    Key? key,
-    required this.label,
-    this.onChanged,
-  }) : super(key: key);
-
-  final String label;
-  final Function(String)? onChanged;
-
-  @override
-  _PasswordInputStylingState createState() => _PasswordInputStylingState();
-}
-
-class _PasswordInputStylingState extends State<PasswordInputStyling> {
-  bool _obscureText = true;
-
-  void _toggleVisibility() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      obscureText: _obscureText,
-      enableSuggestions: false,
-      autocorrect: false,
-      style: TextStyle(
-        color: Colors.black,
-        fontWeight: FontWeight.w500,
-      ),
-      decoration: InputDecoration(
-        hintText: "${widget.label}...",
-        hintStyle: TextStyle(
-          color: Colors.grey,
-        ),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        suffixIcon: GestureDetector(
-          onTap: _toggleVisibility,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Image.asset(
-              _obscureText ? 'assets/icons/hide.png' : 'assets/icons/show.png',
-              width: 30,
-              height: 30,
-            ),
-          ),
-        ),
-        border: InputBorder.none,
-        filled: true,
-        fillColor: Colors.transparent,
-        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-      ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return '${widget.label} is required';
-        }
-        return null;
-      },
-      onChanged: widget.onChanged,
     );
   }
 }

@@ -1,105 +1,77 @@
 import 'package:flutter/material.dart';
+import 'package:sav_project/models/historiqueRDV.dart';
+import '../widgets/historique_element.dart';
 
-class HistoriqueScreen extends StatefulWidget {
-  const HistoriqueScreen({super.key});
+class Historique extends StatefulWidget {
+  const Historique({super.key});
 
   @override
-  State<HistoriqueScreen> createState() => _HistoriqueScreenState();
+  State<Historique> createState() => _HistoriqueState();
 }
 
-class _HistoriqueScreenState extends State<HistoriqueScreen> {
-  final List<dynamic> historiqueData = [];
+class _HistoriqueState extends State<Historique> {
+  List<Historiquerdv> historiques = [
+    Historiquerdv(
+        type: 'Vidange',
+        state: 'Accepté',
+        marque: 'Volkswagon',
+        modele: 'Tiguan',
+        immatriculation: '218-TUN-7066',
+        date: DateTime.parse('2024-06-29 12:15:00')),
+    Historiquerdv(
+        type: 'Vidange',
+        state: 'Refusé',
+        marque: 'Volkswagon',
+        modele: 'Passat',
+        immatriculation: '218-TUN-7066',
+        date: DateTime.parse('2024-06-29 12:15:00')),
+    Historiquerdv(
+        type: 'Vidange',
+        state: 'En cours',
+        marque: 'Volkswagon',
+        modele: 'Golf',
+        immatriculation: '218-TUN-7066',
+        date: DateTime.parse('2024-06-29 12:15:00')),
+    Historiquerdv(
+        type: 'Vidange',
+        state: 'Annulé',
+        marque: 'Volkswagon',
+        modele: 'Polo',
+        immatriculation: '218-TUN-7066',
+        date: DateTime.parse('2024-06-29 12:15:00')),
+  ];
 
-  @override
-  Widget build(BuildContext context) {
-    Widget contentWidget;
-    if (historiqueData.isEmpty) {
-      contentWidget = Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Center(
-          child: Text(
-            "Vous n'avez encore aucun historique.",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16,
-              color: const Color.fromARGB(255, 131, 130, 130),
-            ),
-          ),
-        ),
-      );
-    } else {
-      contentWidget = Column(
-        children: historiqueData.map((data) => HistoriqueElement()).toList(),
-      );
-    }
-    return Scaffold(
-      backgroundColor: Color(0xFFF6F8FB),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-          child: contentWidget,
-        ),
-      ),
-    );
+  void onDismissed(Historiquerdv historique) {
+    setState(() {
+      historiques.remove(historique);
+    });
   }
-}
-
-class HistoriqueElement extends StatelessWidget {
-  const HistoriqueElement({
-    super.key,
-  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 0,
-            blurRadius: 1,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      padding: EdgeInsets.all(15),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Vidange',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  height: 1.3,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 16),
+        child: historiques.isEmpty
+            ? Center(
+                child: Text(
+                  "Vous n'avez encore aucun historique.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color.fromARGB(255, 131, 130, 130),
+                  ),
                 ),
+              )
+            : ListView.builder(
+                itemCount: historiques.length,
+                itemBuilder: (context, index) {
+                  return HistoriqueElement(
+                    historique: historiques[index],
+                    onDismissed: onDismissed,
+                  );
+                },
               ),
-              Text('Accepté'),
-            ],
-          ),
-          Row(
-            children: [
-              Text('Véhicule:  '),
-              Text('Volkswagon - Tiguan'),
-            ],
-          ),
-          Row(
-            children: [
-              Text('218-TUN-7066'),
-            ],
-          ),
-          Row(
-            children: [
-              Text('Le 12/10/2024 à 13:00'),
-            ],
-          ),
-        ],
       ),
     );
   }

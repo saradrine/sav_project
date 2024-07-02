@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class SideMenu extends StatefulWidget {
-  const SideMenu({super.key});
+  const SideMenu({
+    super.key,
+    required this.selectedMenu,
+    required this.onMenuItemTapped,
+  });
+
+  final String selectedMenu;
+  final Function(String) onMenuItemTapped;
 
   @override
   State<SideMenu> createState() => _SideMenuState();
@@ -66,11 +73,14 @@ class _SideMenuState extends State<SideMenu> {
                                 title: element['title'],
                                 press: () {
                                   setState(() {
+                                    widget.onMenuItemTapped(element['title']);
                                     selectedMenu = element['title'];
                                   });
                                   // Navigator.pushNamed(context, '/');
                                 },
-                                isActive: selectedMenu == element['title'],
+                                isActive:
+                                    widget.selectedMenu == element['title'],
+                                // element['title'] == 'Nouveau véhicule',
                               );
                             }).toList(),
                           ],
@@ -85,7 +95,8 @@ class _SideMenuState extends State<SideMenu> {
                           });
                           // Navigator.pushNamed(context, '/');
                         },
-                        isActive: selectedMenu == 'Déconnexion',
+                        isActive: widget.selectedMenu == 'Déconnexion',
+                        // isActive: selectedMenu == 'Déconnexion',
                       ),
                     ],
                   ),
