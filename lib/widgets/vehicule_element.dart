@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sav_project/models/vehicule.dart';
+import 'package:sav_project/theme/colors.dart';
 
 // Constants for styles
-const _iconColor = Color(0xFF575757);
-const _textStyle =
-    TextStyle(color: _iconColor, fontWeight: FontWeight.w500, fontSize: 16);
+const _textStyle = TextStyle(
+    color: AppColors.iconColor, fontWeight: FontWeight.w500, fontSize: 16);
 
 class VehiculeElement extends StatefulWidget {
   final Vehicule vehicule;
@@ -92,7 +92,7 @@ class _VehiculeElementState extends State<VehiculeElement> {
                       title: Text(
                         'Supprimer le véhicule',
                         style: TextStyle(
-                          color: Color(0xFFB50000),
+                          color: AppColors.deleteColor,
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
                         ),
@@ -144,7 +144,7 @@ class _VehiculeElementState extends State<VehiculeElement> {
                   'assets/icons/option.png',
                   width: 30,
                   height: 30,
-                  color: _iconColor,
+                  color: AppColors.iconColor,
                 ),
               ),
             ],
@@ -215,7 +215,7 @@ class IconTextRow extends StatelessWidget {
             iconPath,
             width: width,
             height: height,
-            color: _iconColor,
+            color: AppColors.iconColor,
           ),
         ),
         SizedBox(width: 8),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sav_project/theme/colors.dart';
 import 'dart:async';
 import '../models/notif.dart';
 
@@ -72,7 +73,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
               if (widget.notification.isUnRead)
                 Icon(
                   Icons.circle,
-                  color: Color.fromARGB(255, 3, 147, 136),
+                  color: AppColors.kPrimaryColor,
                   size: 14,
                 ),
             ],

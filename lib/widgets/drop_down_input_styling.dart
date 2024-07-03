@@ -1,17 +1,19 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class CustomDropdown extends StatefulWidget {
   const CustomDropdown({
     super.key,
-    required this.icon,
+    this.icon,
     required this.height,
     required this.width,
     required this.label,
     required this.items,
-    this.dropdownWidth = 250,
+    this.dropdownWidth = 190,
   });
 
-  final String icon;
+  final String? icon;
   final double height;
   final double width;
   final String label;
@@ -40,6 +42,15 @@ class _CustomDropdownState extends State<CustomDropdown> {
     final renderBox = context.findRenderObject() as RenderBox;
     final size = renderBox.size;
     final offset = renderBox.localToGlobal(Offset.zero);
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    final availableSpaceBelow = screenHeight - (offset.dy + size.height);
+    final int maxItemsToShow = 5;
+    final double itemHeight = 62.0;
+    final double maxDropdownHeight = itemHeight * maxItemsToShow;
+    final double dropdownHeight =
+        min(widget.items.length * itemHeight, maxDropdownHeight);
+    final bool fitsBelow = availableSpaceBelow >= dropdownHeight;
 
     _overlayEntry = OverlayEntry(
       builder: (context) => Stack(
@@ -51,19 +62,21 @@ class _CustomDropdownState extends State<CustomDropdown> {
             ),
           ),
           Positioned(
-            left: offset.dx + size.width - widget.dropdownWidth,
-            top: offset.dy + size.height,
+            left: offset.dx,
+            top: fitsBelow
+                ? offset.dy + size.height
+                : offset.dy - dropdownHeight,
             width: widget.dropdownWidth,
             child: Material(
               borderRadius: BorderRadius.circular(15),
               elevation: 16,
               child: Container(
+                height: dropdownHeight,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListView(
-                  shrinkWrap: true,
                   padding: EdgeInsets.all(8.0),
                   children: widget.items.map((String value) {
                     return Container(
@@ -82,8 +95,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                       ),
                       child: ListTile(
                         dense: true,
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 16.0),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
                         title: Text(
                           value,
                           style: TextStyle(
@@ -129,37 +141,38 @@ class _CustomDropdownState extends State<CustomDropdown> {
       },
       child: InputDecorator(
         decoration: InputDecoration(
-          // hintText: "Choisir le ${widget.label}",
-          // hintStyle: TextStyle(
-          //   color: Colors.grey,
-          // ),
           floatingLabelBehavior: FloatingLabelBehavior.never,
-          prefixIcon: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Image.asset(
-              'assets/icons/' + widget.icon,
-              width: widget.width,
-              height: widget.height,
-            ),
-          ),
+          prefixIcon: widget.icon != null && widget.icon!.isNotEmpty
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Image.asset(
+                    'assets/icons/' + widget.icon!,
+                    width: widget.width,
+                    height: widget.height,
+                  ),
+                )
+              : null,
           border: InputBorder.none,
           filled: true,
           fillColor: Colors.transparent,
-          contentPadding:
-              EdgeInsets.symmetric(vertical: (60 - widget.height) / 2),
+          contentPadding: EdgeInsets.symmetric(
+              vertical: (60 - widget.height) / 2, horizontal: 20),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              _selectedValue ?? "Choisir le ${widget.label}",
-              style: TextStyle(
-                color: _isItemSelected ? Colors.black : Colors.grey,
-                fontWeight: FontWeight.w500,
+            Expanded(
+              child: Text(
+                _selectedValue ?? "Choisir le ${widget.label}",
+                style: TextStyle(
+                  color: _isItemSelected ? Colors.black : Colors.grey,
+                  fontWeight: FontWeight.w500,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.only(left: 5.0),
               child: Image.asset(
                 'assets/icons/down.png',
                 width: 35,

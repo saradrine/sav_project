@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:sav_project/theme/colors.dart';
 import 'package:sav_project/widgets/button.dart';
+
+import 'date_input_styling.dart';
+import 'phone_input_styling.dart';
 
 class ProfileFieldDetail {
   final String label;
-  final String icon;
+  final String? icon;
   final double height;
   final double width;
   final WidgetType widgetType;
@@ -11,7 +15,7 @@ class ProfileFieldDetail {
 
   ProfileFieldDetail({
     required this.label,
-    this.icon = '',
+    this.icon,
     this.height = 30,
     this.width = 30,
     required this.widgetType,
@@ -19,7 +23,12 @@ class ProfileFieldDetail {
   });
 }
 
-enum WidgetType { TextInputStyling, PhoneInputStyling, DateInputStyling }
+enum WidgetType {
+  TextInputStyling,
+  PhoneInputStyling,
+  DateInputStyling,
+  DropDownInputStyling
+}
 
 class ProfileForm extends StatefulWidget {
   final List<ProfileFieldDetail> fields;
@@ -58,7 +67,7 @@ class _ProfileFormState extends State<ProfileForm> {
                         }
                       },
                       textColor: Colors.white,
-                      backgroundColor: Color(0xFF039388),
+                      backgroundColor: AppColors.kPrimaryColor,
                       text: 'Sauvegarder'),
                   SizedBox(
                     width: 15,
@@ -74,7 +83,7 @@ class _ProfileFormState extends State<ProfileForm> {
                           // _formKey.currentState.save();
                         }
                       },
-                      textColor: Color(0xFF039388),
+                      textColor: AppColors.kPrimaryColor,
                       backgroundColor: Color(0xFFEEF0F3),
                       text: 'Annuler'),
                 ],
@@ -88,7 +97,7 @@ class _ProfileFormState extends State<ProfileForm> {
                 final field = widget.fields[index ~/ 2];
                 return ProfileFieldInput(
                   label: field.label,
-                  icon: field.icon,
+                  icon: field.icon!,
                   height: field.height,
                   width: field.width,
                   widgetType: field.widgetType,
@@ -199,7 +208,7 @@ class TextInputStyling extends StatelessWidget {
       decoration: InputDecoration(
         labelText: label,
         labelStyle: TextStyle(
-          color: Colors.grey,
+          color: AppColors.hintColor,
           fontSize: 20,
           fontWeight: FontWeight.w500,
         ),
@@ -220,312 +229,10 @@ class TextInputStyling extends StatelessWidget {
       keyboardType: keyboardType,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return '$label is required';
+          return '$label obligatoire';
         }
         return null;
       },
-    );
-  }
-}
-
-class PhoneInputStyling extends StatefulWidget {
-  const PhoneInputStyling({
-    Key? key,
-    required this.label,
-    required this.icon,
-    required this.content,
-    required this.width,
-    required this.height,
-  }) : super(key: key);
-
-  final String label;
-  final String icon;
-  final String content;
-  final double width;
-  final double height;
-
-  @override
-  _PhoneInputStylingState createState() => _PhoneInputStylingState();
-}
-
-class _PhoneInputStylingState extends State<PhoneInputStyling> {
-  List<String> phoneNumbers = [];
-
-  @override
-  void initState() {
-    super.initState();
-    phoneNumbers.add(widget.content);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: TextInputStyling(
-                label: widget.label,
-                icon: widget.icon,
-                width: widget.width,
-                height: widget.height,
-                content: phoneNumbers.first,
-                keyboardType: TextInputType.phone,
-              ),
-            ),
-          ],
-        ),
-        ...phoneNumbers.skip(1).map((phone) => Padding(
-              padding: const EdgeInsets.only(left: 40.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 32),
-                      child: TextFormField(
-                        initialValue: phone,
-                        autofocus: true,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Téléphone...',
-                        ),
-                        keyboardType: TextInputType.phone,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )),
-        Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: Divider(
-            color: Colors.grey,
-            height: 1,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 8),
-          child: TextButton.icon(
-            onPressed: () {
-              setState(() {
-                phoneNumbers.add('');
-              });
-            },
-            icon: Icon(Icons.add, color: Colors.grey),
-            label: Text(
-              'Ajouter numéro de téléphone',
-              style: TextStyle(color: Colors.grey),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-}
-
-class DateInputStyling extends StatefulWidget {
-  const DateInputStyling({
-    Key? key,
-    required this.label,
-    required this.icon,
-    this.content = '',
-    required this.width,
-    required this.height,
-  }) : super(key: key);
-
-  final String label;
-  final String icon;
-  final double width;
-  final double height;
-  final String content;
-
-  @override
-  _DateInputStylingState createState() => _DateInputStylingState();
-}
-
-class _DateInputStylingState extends State<DateInputStyling> {
-  TextEditingController _controller = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _controller.text = widget.content;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        DateTime? pickedDate = await showDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime(2000),
-          lastDate: DateTime(2101),
-          builder: (BuildContext context, Widget? child) {
-            return Theme(
-              data: ThemeData.light().copyWith(
-                dividerTheme: DividerThemeData(
-                  color: Colors.grey,
-                  space: 1,
-                  thickness: 1,
-                ),
-                colorScheme: ColorScheme.light(
-                  primary: Color(0xFF039388),
-                  onPrimary: Colors.white,
-                ),
-                textButtonTheme: TextButtonThemeData(
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.black,
-                  ),
-                ),
-              ),
-              child: child!,
-            );
-          },
-        );
-
-        if (pickedDate != null) {
-          setState(() {
-            _controller.text = "${pickedDate.toLocal()}".split(' ')[0];
-          });
-        }
-      },
-      child: AbsorbPointer(
-        child: TextFormField(
-          controller: _controller,
-          decoration: InputDecoration(
-            labelText: widget.label,
-            labelStyle: TextStyle(
-              color: Colors.grey,
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
-            border: InputBorder.none,
-            prefixIcon: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Image.asset(
-                'assets/icons/' + widget.icon,
-                width: widget.width,
-                height: widget.height,
-              ),
-            ),
-          ),
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return '${widget.label} is required';
-            }
-            return null;
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class TimeInputStyling extends StatefulWidget {
-  const TimeInputStyling({
-    Key? key,
-    required this.label,
-    required this.icon,
-    this.content = '',
-    required this.width,
-    required this.height,
-  }) : super(key: key);
-
-  final String label;
-  final String icon;
-  final double width;
-  final double height;
-  final String content;
-
-  @override
-  _TimeInputStylingState createState() => _TimeInputStylingState();
-}
-
-class _TimeInputStylingState extends State<TimeInputStyling> {
-  TextEditingController _controller = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _controller.text = widget.content;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        TimeOfDay? pickedTime = await showTimePicker(
-          context: context,
-          initialTime: TimeOfDay.now(),
-          builder: (BuildContext context, Widget? child) {
-            return Theme(
-              data: ThemeData.light().copyWith(
-                dividerTheme: DividerThemeData(
-                  color: Colors.grey,
-                  space: 1,
-                  thickness: 1,
-                ),
-                colorScheme: ColorScheme.light(
-                  primary: Color(0xFF039388),
-                  onPrimary: Colors.white,
-                ),
-                textButtonTheme: TextButtonThemeData(
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.black,
-                  ),
-                ),
-              ),
-              child: child!,
-            );
-          },
-        );
-
-        if (pickedTime != null) {
-          setState(() {
-            _controller.text = pickedTime.format(context);
-          });
-        }
-      },
-      child: AbsorbPointer(
-        child: TextFormField(
-          controller: _controller,
-          decoration: InputDecoration(
-            labelText: widget.label,
-            labelStyle: TextStyle(
-              color: Colors.grey,
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
-            border: InputBorder.none,
-            prefixIcon: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Image.asset(
-                'assets/icons/' + widget.icon,
-                width: widget.width,
-                height: widget.height,
-              ),
-            ),
-          ),
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return '${widget.label} is required';
-            }
-            return null;
-          },
-        ),
-      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sav_project/theme/colors.dart';
 
 class TextInputStyling extends StatelessWidget {
   const TextInputStyling({
@@ -24,7 +25,7 @@ class TextInputStyling extends StatelessWidget {
       decoration: InputDecoration(
         hintText: "$label...",
         hintStyle: TextStyle(
-          color: Colors.grey,
+          color: AppColors.hintColor,
         ),
         floatingLabelBehavior: FloatingLabelBehavior.never,
         prefixIcon: Padding(
@@ -42,7 +43,7 @@ class TextInputStyling extends StatelessWidget {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return label + 'is required';
+          return '${label} obligatoire';
         }
         return null;
       },

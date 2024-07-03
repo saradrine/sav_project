@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sav_project/models/user.dart';
+import 'package:sav_project/theme/colors.dart';
 import 'package:sav_project/widgets/change_pwd_form.dart';
 import 'package:sav_project/widgets/profile_fields.dart';
 import 'package:sav_project/widgets/profile_form.dart';
@@ -103,7 +104,7 @@ class _ProfileState extends State<Profile> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 3, 147, 136),
+                              color: AppColors.kPrimaryColor,
                             ),
                           ),
                         ),
@@ -123,7 +124,7 @@ class _ProfileState extends State<Profile> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 3, 147, 136),
+                          color: AppColors.kPrimaryColor,
                         ),
                       ),
                     ),
@@ -168,4 +169,3 @@ class _ProfileState extends State<Profile> {
     );
   }
 }
-

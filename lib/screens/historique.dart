@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sav_project/models/historiqueRDV.dart';
+import 'package:sav_project/theme/colors.dart';
 import '../widgets/historique_element.dart';
 
 class Historique extends StatefulWidget {
@@ -59,7 +60,7 @@ class _HistoriqueState extends State<Historique> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
-                    color: Color.fromARGB(255, 131, 130, 130),
+                    color: AppColors.emptyTextColor,
                   ),
                 ),
               )

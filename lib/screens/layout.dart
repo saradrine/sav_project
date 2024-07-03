@@ -30,8 +30,8 @@ class _LayoutState extends State<Layout> {
     MyVehicules(),
     AddVehicule(),
     Appointment(),
-    Historique(),
     Profile(),
+    Historique(),
     Notifications(),
     Settings(),
   ];
@@ -41,8 +41,8 @@ class _LayoutState extends State<Layout> {
     'Mes véhicules',
     'Nouveau véhicule',
     'Rendez-vous',
-    'Historique',
     'Profil',
+    'Historique',
     'Notifications',
     'Paramètres',
   ];
@@ -52,8 +52,8 @@ class _LayoutState extends State<Layout> {
     'Mes véhicules': 1,
     'Nouveau véhicule': 2,
     'Rendez-vous': 3,
-    'Historique': 4,
-    'Profil': 5,
+    'Profil': 4,
+    'Historique': 5,
     'Notifications': 6,
     'Paramètres': 7,
   };

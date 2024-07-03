@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sav_project/theme/colors.dart';
 
 class BottomNavbar extends StatefulWidget {
   final Function(int) onTap;
@@ -50,7 +51,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
                 icon: 'assets/icons/addFull.png',
                 index: 2,
                 size: 57,
-                color: Color.fromARGB(255, 3, 147, 136),
+                color: AppColors.kPrimaryColor,
               ),
               _buildNavItem(
                 icon: 'assets/icons/calendarNavOulined.png',

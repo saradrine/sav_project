@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sav_project/theme/colors.dart';
 
 class AccountConfirmation extends StatelessWidget {
   const AccountConfirmation({Key? key}) : super(key: key);
@@ -53,7 +54,7 @@ class AccountConfirmation extends StatelessWidget {
                   'foulen@foulen.com',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Color.fromARGB(255, 3, 147, 136),
+                    color: AppColors.kPrimaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

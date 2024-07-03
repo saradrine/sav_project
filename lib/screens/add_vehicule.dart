@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sav_project/widgets/field_input.dart';
 import 'package:sav_project/widgets/form.dart';
 
 class AddVehicule extends StatefulWidget {
@@ -12,7 +13,6 @@ class _AddVehiculeState extends State<AddVehicule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF6F8FB),
       body: SingleChildScrollView(
         child: Column(
           children: [

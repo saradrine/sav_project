@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sav_project/theme/colors.dart';
 
 class PasswordInputStyling extends StatefulWidget {
   const PasswordInputStyling({
@@ -36,9 +37,17 @@ class _PasswordInputStylingState extends State<PasswordInputStyling> {
       decoration: InputDecoration(
         hintText: "${widget.label}...",
         hintStyle: TextStyle(
-          color: Colors.grey,
+          color: AppColors.hintColor,
         ),
         floatingLabelBehavior: FloatingLabelBehavior.never,
+        prefixIcon: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Image.asset(
+            'assets/icons/padlock.png',
+            width: 22,
+            height: 22,
+          ),
+        ),
         suffixIcon: GestureDetector(
           onTap: _toggleVisibility,
           child: Padding(
@@ -57,7 +66,7 @@ class _PasswordInputStylingState extends State<PasswordInputStyling> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return '${widget.label} is required';
+          return '${widget.label} obligatoire';
         }
         return null;
       },

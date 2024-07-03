@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sav_project/theme/colors.dart';
 
 class SideMenu extends StatefulWidget {
   const SideMenu({
@@ -128,7 +129,7 @@ class ListElement extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 25),
       child: Material(
-        color: isActive ? Color(0xFF039388) : Colors.white,
+        color: isActive ? AppColors.kPrimaryColor : Colors.white,
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(50),
           bottomRight: Radius.circular(50),

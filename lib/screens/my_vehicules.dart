@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sav_project/models/vehicule.dart';
+import 'package:sav_project/theme/colors.dart';
 import '../widgets/vehicule_element.dart';
 import '../widgets/button.dart';
 import 'package:sav_project/screens/layout.dart';
@@ -77,7 +78,7 @@ class _MyVehiculesState extends State<MyVehicules> {
                     );
                   },
                   textColor: Colors.white,
-                  backgroundColor: Color(0xFF039388),
+                  backgroundColor: AppColors.kPrimaryColor,
                   text: 'Ajouter véhicule',
                 ),
               ),
@@ -90,7 +91,7 @@ class _MyVehiculesState extends State<MyVehicules> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
-                      color: Color.fromARGB(255, 131, 130, 130),
+                      color: AppColors.emptyTextColor
                     ),
                   ),
                 )
