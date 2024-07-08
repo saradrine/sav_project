@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sav_project/widgets/drop_down_input_styling.dart';
-import 'package:sav_project/widgets/password_input_styling.dart';
-import 'package:sav_project/widgets/text_input_styling.dart'
+import 'package:sav_project/widgets/input_styling/drop_down_input_styling.dart';
+import 'package:sav_project/widgets/input_styling/password_input_styling.dart';
+import 'package:sav_project/widgets/input_styling/text_input_styling.dart'
     as TextInputStyling;
 
-import 'date_input_styling.dart';
-import 'time_input_styling.dart';
+import 'input_styling/date_input_styling.dart';
+import 'input_styling/time_input_styling.dart';
 
 class FieldDetail {
   final String label;

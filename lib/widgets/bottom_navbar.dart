@@ -93,7 +93,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
       case 4:
         return 328;
       default:
-        return 0;
+        return -200;
     }
   }
 

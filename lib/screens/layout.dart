@@ -22,7 +22,8 @@ class Layout extends StatefulWidget {
 class _LayoutState extends State<Layout> {
   int _selectedIndex = 0;
   int _lastIndex = 0;
-  bool _inNotifPage = false;
+  int _indOfSpecialPage = -1;
+  bool _inSpecialPage = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   List pages = [
@@ -64,36 +65,43 @@ class _LayoutState extends State<Layout> {
     _lastIndex = widget.initialIndex;
   }
 
+  void _tappedSpecialPage(int index) {
+    setState(() {
+      _indOfSpecialPage = index;
+      _selectedIndex = index;
+      _inSpecialPage = true;
+    });
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
       _lastIndex = index;
-      _inNotifPage = false;
+      _indOfSpecialPage = -1;
+      _inSpecialPage = false;
     });
   }
 
   void _onNotifPage() {
-    setState(() {
-      _selectedIndex = 1;
-      _inNotifPage = true;
-    });
+    _tappedSpecialPage(6);
   }
 
   void _onBack() {
     setState(() {
       _selectedIndex = _lastIndex;
-      _inNotifPage = false;
+      _indOfSpecialPage = -1;
+      _inSpecialPage = false;
     });
   }
 
   void _onDrawerItemTapped(String title) {
     int? index = drawerTitleToPageIndex[title];
     if (index != null) {
-      setState(() {
-        _selectedIndex = index;
-        _lastIndex = index;
-        _inNotifPage = false;
-      });
+      if (index > 4) {
+        _tappedSpecialPage(index);
+      } else {
+        _onItemTapped(index);
+      }
       Navigator.pop(context);
     }
   }
@@ -106,7 +114,7 @@ class _LayoutState extends State<Layout> {
         selectedMenu: titles[_selectedIndex],
         onMenuItemTapped: _onDrawerItemTapped,
       ),
-      appBar: _inNotifPage
+      appBar: _inSpecialPage
           ? PreferredSize(
               preferredSize: Size.fromHeight(90),
               child: Container(
@@ -115,7 +123,7 @@ class _LayoutState extends State<Layout> {
                 ),
                 child: AppBar(
                   title: Text(
-                    "Notifications",
+                    titles[_indOfSpecialPage],
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.w600,

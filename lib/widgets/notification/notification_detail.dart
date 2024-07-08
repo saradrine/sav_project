@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sav_project/theme/colors.dart';
 import 'dart:async';
-import '../models/notif.dart';
+import '../../models/notif.dart';
 
 class NotificationDetail extends StatefulWidget {
   final Notif notification;

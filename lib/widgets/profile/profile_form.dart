@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sav_project/theme/colors.dart';
 import 'package:sav_project/widgets/button.dart';
 
-import 'date_input_styling.dart';
-import 'phone_input_styling.dart';
+import '../input_styling/date_input_styling.dart';
+import '../input_styling/phone_input_styling.dart';
 
 class ProfileFieldDetail {
   final String label;
@@ -32,8 +32,9 @@ enum WidgetType {
 
 class ProfileForm extends StatefulWidget {
   final List<ProfileFieldDetail> fields;
+  final Function toggleEditing;
 
-  ProfileForm({required this.fields});
+  ProfileForm({required this.fields, required this.toggleEditing});
 
   @override
   _ProfileFormState createState() => _ProfileFormState();
@@ -74,13 +75,9 @@ class _ProfileFormState extends State<ProfileForm> {
                   ),
                   ButtonStyled(
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing Data')),
-                          );
-                          // _formKey.currentState.save();
+                        if (_formKey.currentState != null) {
+                          _formKey.currentState!.reset();
+                          widget.toggleEditing();
                         }
                       },
                       textColor: AppColors.kPrimaryColor,

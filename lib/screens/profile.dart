@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sav_project/models/user.dart';
+import 'package:sav_project/screens/layout.dart';
 import 'package:sav_project/theme/colors.dart';
-import 'package:sav_project/widgets/change_pwd_form.dart';
-import 'package:sav_project/widgets/profile_fields.dart';
-import 'package:sav_project/widgets/profile_form.dart';
+import 'package:sav_project/widgets/profile/change_pwd_form.dart';
+import 'package:sav_project/widgets/profile/profile_fields.dart';
+import 'package:sav_project/widgets/profile/profile_form.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -39,6 +40,7 @@ class _ProfileState extends State<Profile> {
       body: SingleChildScrollView(
         child: _isEditing
             ? ProfileForm(
+                toggleEditing: toggleEditing,
                 fields: [
                   ProfileFieldDetail(
                     label: 'Prénom:',
@@ -133,7 +135,14 @@ class _ProfileState extends State<Profile> {
                       child: SizedBox(
                         width: 195,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Layout(initialIndex: 1),
+                              ),
+                            );
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

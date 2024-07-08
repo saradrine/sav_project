@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sav_project/widgets/notification_card.dart';
+import 'package:sav_project/widgets/notification/notification_card.dart';
 import 'package:sav_project/models/notif.dart';
 
 class Notifications extends StatefulWidget {

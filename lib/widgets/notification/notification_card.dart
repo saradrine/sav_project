@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sav_project/widgets/notification_detail.dart';
+import 'package:sav_project/widgets/notification/notification_detail.dart';
 import 'package:sav_project/models/notif.dart';
 
 class NotificationCard extends StatelessWidget {
@@ -20,7 +20,7 @@ class NotificationCard extends StatelessWidget {
       elevation: 2,
       color: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),

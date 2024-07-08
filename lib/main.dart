@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sav_project/screens/account_confirmation.dart';
-import 'package:sav_project/screens/confirmation_failure.dart';
-import 'package:sav_project/screens/confirmation_success.dart';
+import 'package:sav_project/screens/account_confirmation/account_confirmation.dart';
+import 'package:sav_project/screens/account_confirmation/confirmation_failure.dart';
+import 'package:sav_project/screens/account_confirmation/confirmation_success.dart';
 import 'package:sav_project/screens/layout.dart';
 import 'package:sav_project/screens/login.dart';
 import 'package:sav_project/screens/signUp.dart';
@@ -13,7 +13,10 @@ void main() {
     statusBarColor: AppColors.kBaseColor,
     systemNavigationBarColor: const Color.fromARGB(255, 246, 248, 251),
   ));
-
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(const MyApp());
 }
 
@@ -37,7 +40,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: isLoggedIn ? Layout() : SignUp(),
+      home: isLoggedIn ? Layout() : Login(),
     );
   }
 }

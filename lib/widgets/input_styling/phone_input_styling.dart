@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sav_project/widgets/profile_form.dart';
+import 'package:sav_project/widgets/profile/profile_form.dart';
 
 class PhoneInputStyling extends StatefulWidget {
   const PhoneInputStyling({
