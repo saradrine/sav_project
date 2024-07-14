@@ -23,22 +23,23 @@ class AccountConfirmation extends StatelessWidget {
                 Text(
                   'Confirmation de Compte',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 21,
                     fontWeight: FontWeight.bold,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 35),
+                SizedBox(height: 30),
                 Image(
                   image: AssetImage('assets/icons/mailOutlined.png'),
                   width: 100,
                   height: 100,
                   color: Color.fromARGB(255, 93, 95, 102),
                 ),
-                SizedBox(height: 35),
+                SizedBox(height: 30),
                 Text(
                   'Merci de vérifier votre adresse e-mail pour activer votre compte.',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -46,14 +47,15 @@ class AccountConfirmation extends StatelessWidget {
                 Text(
                   'Un e-mail de confirmation a été envoyé à :',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                   ),
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 5),
                 Text(
                   'foulen@foulen.com',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                     color: AppColors.kPrimaryColor,
                     fontWeight: FontWeight.bold,
                   ),
@@ -66,7 +68,7 @@ class AccountConfirmation extends StatelessWidget {
                     backgroundColor: Color.fromARGB(255, 106, 202, 179),
                     foregroundColor: Colors.black,
                     textStyle: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
                     ),
@@ -76,7 +78,7 @@ class AccountConfirmation extends StatelessWidget {
                 Text(
                   'Besoin d\'aide ? Contactez le support.',
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                   ),
                 ),
                 SizedBox(height: 50),

@@ -23,7 +23,7 @@ class ConfirmationSuccess extends StatelessWidget {
                 Text(
                   'Confirmation Réussie',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 21,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -40,7 +40,7 @@ class ConfirmationSuccess extends StatelessWidget {
                 Text(
                   'Votre compte a été activé avec succès.',
                   style: TextStyle(
-                    fontSize: 17,
+                    fontSize: 15,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -52,7 +52,7 @@ class ConfirmationSuccess extends StatelessWidget {
                     backgroundColor: Color.fromARGB(255, 106, 202, 179),
                     foregroundColor: Colors.black,
                     textStyle: TextStyle(
-                      fontSize: 19,
+                      fontSize: 16,
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
                     ),

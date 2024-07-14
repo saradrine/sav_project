@@ -30,7 +30,7 @@ class NotificationCard extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                fontSize: 19,
+                fontSize: 17,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -69,14 +69,14 @@ class NotificationCard extends StatelessWidget {
                                       ImageIcon(
                                         AssetImage('assets/icons/delete.png'),
                                         color: Colors.white,
-                                        size: 30,
+                                        size: 25,
                                       ),
                                       SizedBox(height: 6),
                                       Text(
                                         'Supprimer',
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 14,
+                                          fontSize: 12,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),

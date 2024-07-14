@@ -21,25 +21,25 @@ class ConfirmationFailure extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text(
-                  'Échec de la Confirmation',
+                  'Échec de la confirmation',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 19,
                     fontWeight: FontWeight.bold,
                   ),
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 35),
                 Image(
-                  image: AssetImage(
-                      'assets/icons/close-cross-in-circular-outlined-interface-button.png'),
-                  width: 100,
-                  height: 100,
-                  color: Color.fromARGB(255, 93, 95, 102)
-                ),
+                    image: AssetImage(
+                        'assets/icons/close-cross-in-circular-outlined-interface-button.png'),
+                    width: 100,
+                    height: 100,
+                    color: Color.fromARGB(255, 93, 95, 102)),
                 SizedBox(height: 35),
                 Text(
                   'Nous n\'avons pas pu confirmer votre compte. Veuillez réessayer.',
                   style: TextStyle(
-                    fontSize: 17,
+                    fontSize: 15,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -51,7 +51,7 @@ class ConfirmationFailure extends StatelessWidget {
                     backgroundColor: Color.fromARGB(255, 239, 239, 238),
                     foregroundColor: Colors.black,
                     textStyle: TextStyle(
-                      fontSize: 19,
+                      fontSize: 16,
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
                     ),

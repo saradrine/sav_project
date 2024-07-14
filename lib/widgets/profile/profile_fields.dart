@@ -20,36 +20,42 @@ class ProfileFields extends StatelessWidget {
           Field(
             content: user.firstName,
             icon: 'assets/icons/user.png',
+            width: 26,
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 13),
           Field(
             content: user.lastName,
             icon: 'assets/icons/user.png',
+            width: 26,
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 13),
           Field(
             content: user.email,
             icon: 'assets/icons/email.png',
+            width: 23,
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 13),
           Field(
             content: user.phone,
             icon: 'assets/icons/mobile-phone.png',
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 13),
           Field(
             content: user.job,
             icon: 'assets/icons/suitcase.png',
+            width: 23,
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 13),
           Field(
             content: user.address,
             icon: 'assets/icons/gps-navigation.png',
+            width: 26,
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 13),
           Field(
             content: formatDate(user.birthDate).toString(),
             icon: 'assets/icons/cake.png',
+            width: 23,
           ),
         ],
       ),
@@ -67,7 +73,7 @@ class Field extends StatelessWidget {
     Key? key,
     required this.content,
     required this.icon,
-    this.width = 30,
+    this.width = 25,
     this.height = 30,
   }) : super(key: key);
 
@@ -76,7 +82,7 @@ class Field extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       width: MediaQuery.of(context).size.width * 0.85,
-      height: 60,
+      height: 53,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -101,13 +107,13 @@ class Field extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 20, right: 22),
+              padding: const EdgeInsets.only(left: 15, right: 22),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Text(
                   content,
                   style: TextStyle(
-                    fontSize: 17,
+                    fontSize: 15,
                     color: Colors.black,
                   ),
                   overflow: TextOverflow.ellipsis,

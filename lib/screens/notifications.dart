@@ -102,7 +102,7 @@ class _NotificationsState extends State<Notifications> {
                   child: Text(
                     'Aucune notification',
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 17,
                         color: const Color.fromARGB(255, 122, 122, 122)),
                   ),
                 ),

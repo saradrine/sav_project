@@ -100,7 +100,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                           value,
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 16.0,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),

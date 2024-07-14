@@ -15,14 +15,14 @@ class _AppointmentState extends State<Appointment> {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              margin: EdgeInsets.symmetric(vertical: 25, horizontal: 20),
               child: Column(
                 children: [
                   Text(
                     "Merci de fournir les détails nécessaires pour planifier votre visite.",
                     style: TextStyle(
                       height: 1.3,
-                      fontSize: 17,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
@@ -34,7 +34,7 @@ class _AppointmentState extends State<Appointment> {
                     "Veuillez noter que votre rendez-vous doit être confirmé par notre équipe.",
                     style: TextStyle(
                       height: 1.3,
-                      fontSize: 16,
+                      fontSize: 15,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -45,7 +45,7 @@ class _AppointmentState extends State<Appointment> {
                     "Vous recevrez une réponse bientôt.",
                     style: TextStyle(
                       height: 1.3,
-                      fontSize: 16,
+                      fontSize: 15,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -58,22 +58,26 @@ class _AppointmentState extends State<Appointment> {
                   label: 'Date',
                   icon: 'calendar1.png',
                   widgetType: WidgetType.DateInputStyling,
+                  width: 23,
                 ),
                 FieldDetail(
                   label: 'Heure',
                   icon: 'clock.png',
                   widgetType: WidgetType.TimeInputStyling,
+                  width: 23,
                 ),
                 FieldDetail(
                   label: 'Véhicule',
                   icon: 'car.png',
                   widgetType: WidgetType.DropDownInputStyling,
+                  width: 27,
                 ),
                 FieldDetail(
                   label: 'Service',
                   icon: 'customer-support.png',
                   items: ['Vidange', 'Réparation', 'Diagnostic'],
                   widgetType: WidgetType.DropDownInputStyling,
+                  width: 23,
                 ),
               ],
             ),

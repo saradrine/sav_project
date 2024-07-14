@@ -5,8 +5,13 @@ import 'field_input.dart';
 
 class FormWidget extends StatefulWidget {
   final List<FieldDetail> fields;
+  final bool changePwd;
 
-  const FormWidget({super.key, required this.fields});
+  const FormWidget({
+    super.key,
+    required this.fields,
+    this.changePwd = false,
+  });
 
   @override
   FormWidgetState createState() {
@@ -38,11 +43,11 @@ class FormWidgetState extends State<FormWidget> {
                   items: field.items,
                 );
               } else {
-                return SizedBox(height: 30);
+                return SizedBox(height: 20);
               }
             }),
             SizedBox(
-              height: 50,
+              height: 30,
             ),
             Padding(
               padding: const EdgeInsets.only(right: 10.0),
@@ -70,6 +75,9 @@ class FormWidgetState extends State<FormWidget> {
                       onPressed: () {
                         if (_formKey.currentState != null) {
                           _formKey.currentState!.reset();
+                        }
+                        if (widget.changePwd) {
+                          Navigator.pop(context);
                         }
                       },
                       textColor: AppColors.kPrimaryColor,

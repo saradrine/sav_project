@@ -57,7 +57,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
         children: [
           Text(
             widget.notification.text,
-            style: TextStyle(fontSize: 17),
+            style: TextStyle(fontSize: 15),
           ),
           SizedBox(height: 8),
           Row(
@@ -67,7 +67,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                 formatNotificationDate(widget.notification.date),
                 style: TextStyle(
                   color: Colors.grey,
-                  fontSize: 15,
+                  fontSize: 12,
                 ),
               ),
               if (widget.notification.isUnRead)

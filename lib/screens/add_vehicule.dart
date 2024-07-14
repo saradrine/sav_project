@@ -23,7 +23,7 @@ class _AddVehiculeState extends State<AddVehicule> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   height: 1.3,
-                  fontSize: 17,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),

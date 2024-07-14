@@ -47,18 +47,21 @@ class _ProfileState extends State<Profile> {
                     icon: 'user.png',
                     widgetType: WidgetType.TextInputStyling,
                     content: user.firstName,
+                    width: 26,
                   ),
                   ProfileFieldDetail(
                     label: 'Nom:',
                     icon: 'user.png',
                     widgetType: WidgetType.TextInputStyling,
                     content: user.lastName,
+                    width: 26,
                   ),
                   ProfileFieldDetail(
                     label: 'Email:',
                     icon: 'email.png',
                     widgetType: WidgetType.TextInputStyling,
                     content: user.email,
+                    width: 23,
                   ),
                   ProfileFieldDetail(
                     label: 'Téléphone:',
@@ -71,18 +74,22 @@ class _ProfileState extends State<Profile> {
                     icon: 'suitcase.png',
                     widgetType: WidgetType.TextInputStyling,
                     content: user.job,
+                    width: 23,
                   ),
                   ProfileFieldDetail(
                     label: 'Adresse:',
                     icon: 'gps-navigation.png',
                     widgetType: WidgetType.TextInputStyling,
                     content: user.address,
+                    width: 26,
                   ),
                   ProfileFieldDetail(
                     label: 'Date de naissance:',
                     icon: 'cake.png',
                     widgetType: WidgetType.DateInputStyling,
                     content: formatDate(user.birthDate).toString(),
+                    width: 23,
+                    inProfile: true,
                   ),
                 ],
               )
@@ -104,7 +111,7 @@ class _ProfileState extends State<Profile> {
                           child: Text(
                             "Modifier Profil",
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: AppColors.kPrimaryColor,
                             ),
@@ -124,7 +131,7 @@ class _ProfileState extends State<Profile> {
                       child: Text(
                         "Changer mot de passe",
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: AppColors.kPrimaryColor,
                         ),
@@ -133,7 +140,7 @@ class _ProfileState extends State<Profile> {
                     Container(
                       margin: EdgeInsets.only(left: 10),
                       child: SizedBox(
-                        width: 195,
+                        width: 200,
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
@@ -149,7 +156,7 @@ class _ProfileState extends State<Profile> {
                               Text(
                                 "Mes véhicules",
                                 style: TextStyle(
-                                  fontSize: 17,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

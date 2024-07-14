@@ -7,7 +7,7 @@ class ButtonStyled extends StatelessWidget {
     required this.backgroundColor,
     required this.text,
     this.onPressed,
-  }) ;
+  });
 
   final Color textColor;
   final Color backgroundColor;
@@ -17,14 +17,14 @@ class ButtonStyled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 43,
+      height: 38,
       child: ElevatedButton(
         onPressed: onPressed,
         child: Text(
           text,
           style: TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.w600,
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
           ),
         ),
         style: ElevatedButton.styleFrom(

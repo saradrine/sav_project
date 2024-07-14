@@ -32,12 +32,12 @@ class _PasswordInputStylingState extends State<PasswordInputStyling> {
       autocorrect: false,
       style: TextStyle(
         color: Colors.black,
-        fontWeight: FontWeight.w500,
       ),
       decoration: InputDecoration(
         hintText: "${widget.label}...",
         hintStyle: TextStyle(
           color: AppColors.hintColor,
+          fontSize: 14,
         ),
         floatingLabelBehavior: FloatingLabelBehavior.never,
         prefixIcon: Padding(
@@ -53,9 +53,9 @@ class _PasswordInputStylingState extends State<PasswordInputStyling> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Image.asset(
-              _obscureText ? 'assets/icons/hide.png' : 'assets/icons/show.png',
-              width: 30,
-              height: 30,
+              _obscureText ? 'assets/icons/show.png' : 'assets/icons/hide.png',
+              width: 25,
+              height: 25,
             ),
           ),
         ),

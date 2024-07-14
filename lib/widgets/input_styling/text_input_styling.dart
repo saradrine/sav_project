@@ -20,12 +20,13 @@ class TextInputStyling extends StatelessWidget {
     return TextFormField(
       style: TextStyle(
         color: Colors.black,
-        fontWeight: FontWeight.w500,
+        fontSize: 15,
       ),
       decoration: InputDecoration(
         hintText: "$label...",
         hintStyle: TextStyle(
           color: AppColors.hintColor,
+          fontSize: 14,
         ),
         floatingLabelBehavior: FloatingLabelBehavior.never,
         prefixIcon: Padding(

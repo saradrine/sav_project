@@ -139,12 +139,12 @@ class ListElement extends StatelessWidget {
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           child: Container(
-            height: 60,
+            height: 53,
             child: ListTile(
               leading: Image.asset(
                 'assets/icons/' + icon,
-                width: isActive ? 36 : 34,
-                height: isActive ? 36 : 34,
+                width: isActive ? 34 : 32,
+                height: isActive ? 34 : 32,
                 color: isActive ? Colors.white : null,
               ),
               title: Text(
@@ -152,7 +152,7 @@ class ListElement extends StatelessWidget {
                 style: TextStyle(
                   color: isActive ? Colors.white : Colors.black,
                   fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-                  fontSize: isActive ? 20 : 18,
+                  fontSize: isActive ? 17 : 16,
                 ),
               ),
               contentPadding: EdgeInsets.only(left: 30, right: 0),

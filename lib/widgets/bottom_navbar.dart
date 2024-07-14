@@ -18,7 +18,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
     return Stack(
       children: [
         Container(
-          height: 70,
+          height: 60,
           padding: EdgeInsets.symmetric(horizontal: 12),
           margin: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
           decoration: BoxDecoration(
@@ -39,30 +39,30 @@ class _BottomNavbarState extends State<BottomNavbar> {
               _buildNavItem(
                 icon: 'assets/icons/homeOutlined.png',
                 index: 0,
-                size: 38,
+                size: 33,
               ),
               _buildNavItem(
                 icon: 'assets/icons/carOutlined.png',
                 index: 1,
-                size: 43,
+                size: 40,
                 topPadding: 5,
               ),
               _buildNavItem(
                 icon: 'assets/icons/addFull.png',
                 index: 2,
-                size: 57,
+                size: 52,
                 color: AppColors.kPrimaryColor,
               ),
               _buildNavItem(
                 icon: 'assets/icons/calendarNavOulined.png',
                 index: 3,
-                size: 38,
+                size: 37,
                 topPadding: 5,
               ),
               _buildNavItem(
                 icon: 'assets/icons/people.png',
                 index: 4,
-                size: 37,
+                size: 33,
               ),
             ],
           ),
@@ -81,20 +81,15 @@ class _BottomNavbarState extends State<BottomNavbar> {
   }
 
   double _calculateUnderlinePosition(int index, BuildContext context) {
-    switch (index) {
-      case 0:
-        return 44.5;
-      case 1:
-        return 114;
-      case 2:
-        return MediaQuery.of(context).size.width / 2 - 20;
-      case 3:
-        return 256;
-      case 4:
-        return 328;
-      default:
-        return -200;
-    }
+    double screenWidth = MediaQuery.of(context).size.width;
+    double marginHorizontal = 18;
+    double paddingHorizontal = 12;
+    double navBarWidth =
+        screenWidth - 2 * marginHorizontal - 2 * paddingHorizontal;
+    int numberOfItems = 5;
+    double itemWidth = navBarWidth / numberOfItems;
+    double offset = (itemWidth - 39) / 2;
+    return marginHorizontal + paddingHorizontal + itemWidth * index + offset;
   }
 
   Widget _buildNavItem({
@@ -111,7 +106,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
       icon: ImageIcon(
         AssetImage(icon),
         color: color,
-        size: isSelected ? size + 5 : size,
+        size: isSelected ? size + 3 : size,
       ),
       onPressed: () {
         widget.onTap(index);

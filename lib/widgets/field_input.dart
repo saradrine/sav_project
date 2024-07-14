@@ -19,7 +19,7 @@ class FieldDetail {
       {required this.label,
       this.icon = '',
       this.height = 30,
-      this.width = 30,
+      this.width = 25,
       required this.widgetType,
       this.items = const []});
 }
@@ -37,8 +37,8 @@ class FieldInput extends StatefulWidget {
     Key? key,
     required this.label,
     this.icon = '',
-    this.height = 30,
-    this.width = 30,
+    this.height = 25,
+    this.width = 25,
     required this.widgetType,
     this.items = const [],
     this.borderRadius = 20.0,
@@ -70,19 +70,19 @@ class _FieldInputState extends State<FieldInput> {
           child: Text(
             '${widget.label}:',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 15,
               color: Colors.black,
               fontWeight: FontWeight.w500,
             ),
           ),
         ),
         SizedBox(
-          height: 10,
+          height: 5,
         ),
         Container(
           alignment: Alignment.center,
           width: MediaQuery.of(context).size.width * 0.85,
-          height: 60,
+          height: 53,
           decoration: BoxDecoration(
             boxShadow: widget.applyBoxShadow
                 ? [

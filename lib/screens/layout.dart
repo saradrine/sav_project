@@ -125,7 +125,7 @@ class _LayoutState extends State<Layout> {
                   title: Text(
                     titles[_indOfSpecialPage],
                     style: TextStyle(
-                      fontSize: 28,
+                      fontSize: 23,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -136,8 +136,8 @@ class _LayoutState extends State<Layout> {
                     child: IconButton(
                       icon: Image.asset(
                         'assets/icons/arrow.png',
-                        width: 37,
-                        height: 37,
+                        width: 25,
+                        height: 25,
                       ),
                       onPressed: _onBack,
                     ),
@@ -155,7 +155,7 @@ class _LayoutState extends State<Layout> {
                   title: Text(
                     titles[_selectedIndex],
                     style: TextStyle(
-                      fontSize: 28,
+                      fontSize: 23,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -166,8 +166,8 @@ class _LayoutState extends State<Layout> {
                     child: IconButton(
                       icon: Image.asset(
                         'assets/icons/menu.png',
-                        width: 37,
-                        height: 37,
+                        width: 30,
+                        height: 30,
                       ),
                       onPressed: () {
                         _scaffoldKey.currentState?.openDrawer();
@@ -180,7 +180,7 @@ class _LayoutState extends State<Layout> {
                       child: IconButton(
                         icon: ImageIcon(
                           AssetImage('assets/icons/bellOutlined.png'),
-                          size: 32,
+                          size: 28,
                         ),
                         color: Colors.black,
                         onPressed: _onNotifPage,

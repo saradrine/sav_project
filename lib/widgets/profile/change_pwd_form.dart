@@ -12,12 +12,13 @@ class _ChangePwdFormState extends State<ChangePwdForm> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.only(top: 16),
+        padding: EdgeInsets.only(top: 40, bottom: 50),
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 246, 248, 251),
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: FormWidget(
+          changePwd: true,
           fields: [
             FieldDetail(
               label: 'Ancien Mot de passe',

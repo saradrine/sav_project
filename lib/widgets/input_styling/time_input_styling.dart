@@ -21,7 +21,6 @@ class TimeInputStyling extends StatefulWidget {
   _TimeInputStylingState createState() => _TimeInputStylingState();
 }
 
-
 class _TimeInputStylingState extends State<TimeInputStyling> {
   TextEditingController _controller = TextEditingController();
 
@@ -71,13 +70,15 @@ class _TimeInputStylingState extends State<TimeInputStyling> {
         child: TextFormField(
           controller: _controller,
           decoration: InputDecoration(
+            floatingLabelBehavior: FloatingLabelBehavior.never,
             labelText: widget.label,
             labelStyle: TextStyle(
               color: AppColors.hintColor,
-              fontSize: 18,
+              fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
             border: InputBorder.none,
+            contentPadding: EdgeInsets.only(bottom: (53 - widget.height) / 2),
             prefixIcon: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Image.asset(
@@ -89,8 +90,7 @@ class _TimeInputStylingState extends State<TimeInputStyling> {
           ),
           style: TextStyle(
             color: Colors.black,
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
+            fontSize: 15,
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {

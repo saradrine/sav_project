@@ -12,14 +12,16 @@ class ProfileFieldDetail {
   final double width;
   final WidgetType widgetType;
   final String content;
+  final bool? inProfile;
 
   ProfileFieldDetail({
     required this.label,
     this.icon,
-    this.height = 30,
-    this.width = 30,
+    this.height = 25,
+    this.width = 25,
     required this.widgetType,
     required this.content,
+    this.inProfile = false,
   });
 }
 
@@ -87,7 +89,7 @@ class _ProfileFormState extends State<ProfileForm> {
               ),
             ),
             SizedBox(
-              height: 25,
+              height: 20,
             ),
             ...List.generate(widget.fields.length * 2 - 1, (index) {
               if (index % 2 == 0) {
@@ -99,9 +101,10 @@ class _ProfileFormState extends State<ProfileForm> {
                   width: field.width,
                   widgetType: field.widgetType,
                   content: field.content,
+                  inProfile: field.inProfile,
                 );
               } else {
-                return SizedBox(height: 15);
+                return SizedBox(height: 13);
               }
             }),
             SizedBox(
@@ -123,6 +126,7 @@ class ProfileFieldInput extends StatelessWidget {
     required this.width,
     required this.widgetType,
     required this.content,
+    this.inProfile = false,
   }) : super(key: key);
 
   final String label;
@@ -131,6 +135,7 @@ class ProfileFieldInput extends StatelessWidget {
   final double height;
   final WidgetType widgetType;
   final String content;
+  final bool? inProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +179,7 @@ class ProfileFieldInput extends StatelessWidget {
                     content: content,
                     width: width,
                     height: height,
+                    inProfile: inProfile,
                   ),
       ),
     );
@@ -206,7 +212,7 @@ class TextInputStyling extends StatelessWidget {
         labelText: label,
         labelStyle: TextStyle(
           color: AppColors.hintColor,
-          fontSize: 20,
+          fontSize: 16,
           fontWeight: FontWeight.w500,
         ),
         border: InputBorder.none,
@@ -221,7 +227,7 @@ class TextInputStyling extends StatelessWidget {
       ),
       style: TextStyle(
         color: Colors.black,
-        fontSize: 17,
+        fontSize: 15,
       ),
       keyboardType: keyboardType,
       validator: (value) {

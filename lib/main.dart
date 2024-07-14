@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: isLoggedIn ? Layout() : Login(),
+      home: !isLoggedIn ? Layout() : ConfirmationFailure(),
     );
   }
 }

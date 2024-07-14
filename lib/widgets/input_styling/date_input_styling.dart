@@ -9,6 +9,7 @@ class DateInputStyling extends StatefulWidget {
     this.content = '',
     required this.width,
     required this.height,
+    this.inProfile = false,
   }) : super(key: key);
 
   final String label;
@@ -16,6 +17,7 @@ class DateInputStyling extends StatefulWidget {
   final double width;
   final double height;
   final String content;
+  final bool? inProfile;
 
   @override
   _DateInputStylingState createState() => _DateInputStylingState();
@@ -73,14 +75,20 @@ class _DateInputStylingState extends State<DateInputStyling> {
           controller: _controller,
           decoration: InputDecoration(
             labelText: widget.label,
+            floatingLabelBehavior: widget.inProfile!
+                ? FloatingLabelBehavior.auto
+                : FloatingLabelBehavior.never,
             labelStyle: TextStyle(
               color: AppColors.hintColor,
-              fontSize: 18,
+              fontSize: widget.inProfile! ? 16 : 14,
               fontWeight: FontWeight.w500,
             ),
             border: InputBorder.none,
             filled: true,
             fillColor: Colors.transparent,
+            contentPadding: widget.inProfile != true
+                ? EdgeInsets.only(bottom: (53 - widget.height) / 2)
+                : null,
             prefixIcon: widget.icon != null && widget.icon!.isNotEmpty
                 ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -94,8 +102,7 @@ class _DateInputStylingState extends State<DateInputStyling> {
           ),
           style: TextStyle(
             color: Colors.black,
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
+            fontSize: 15,
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
