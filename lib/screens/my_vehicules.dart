@@ -22,6 +22,8 @@ class _MyVehiculesState extends State<MyVehicules> {
       immatriculation: '218-TUN-7066',
       annee: '2015',
       couleur: 'Noir',
+      kilometrage: 100000,
+      IntervalKilometrage: 15000,
     ),
     Vehicule(
       marque: 'Volkswagon',
@@ -31,6 +33,8 @@ class _MyVehiculesState extends State<MyVehicules> {
       immatriculation: '218-TUN-7066',
       annee: '2015',
       couleur: 'Blanc',
+      kilometrage: 100000,
+      IntervalKilometrage: 15000,
     ),
     Vehicule(
       marque: 'Volkswagon',
@@ -40,6 +44,8 @@ class _MyVehiculesState extends State<MyVehicules> {
       immatriculation: '218-TUN-7066',
       annee: '2015',
       couleur: 'Rouge',
+      kilometrage: 100000,
+      IntervalKilometrage: 15000,
     ),
     Vehicule(
       marque: 'Volkswagon',
@@ -49,6 +55,8 @@ class _MyVehiculesState extends State<MyVehicules> {
       immatriculation: '218-TUN-7066',
       annee: '2015',
       couleur: 'Rouge',
+      kilometrage: 100000,
+      IntervalKilometrage: 15000,
     ),
   ];
 

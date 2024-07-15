@@ -4,7 +4,7 @@ import 'package:sav_project/theme/colors.dart';
 
 // Constants for styles
 const _textStyle = TextStyle(
-    color: AppColors.iconColor, fontWeight: FontWeight.w500, fontSize: 16);
+    color: AppColors.iconColor, fontWeight: FontWeight.w500, fontSize: 15);
 
 class VehiculeElement extends StatefulWidget {
   final Vehicule vehicule;
@@ -136,14 +136,14 @@ class _VehiculeElementState extends State<VehiculeElement> {
             children: [
               Text(
                 '${widget.vehicule.marque} - ${widget.vehicule.modele}',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
               ),
               GestureDetector(
                 onTap: _showOptionsDialog,
                 child: Image.asset(
                   'assets/icons/option.png',
-                  width: 30,
-                  height: 30,
+                  width: 25,
+                  height: 25,
                   color: AppColors.iconColor,
                 ),
               ),

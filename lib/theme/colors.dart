@@ -12,4 +12,5 @@ class AppColors {
   static const iconColor = Color(0xFF575757);
   static const emptyTextColor = Color.fromARGB(255, 131, 130, 130);
   static const deleteColor = Color(0xFFB50000);
+  static const lightGreen = Color(0xFFe5f3f0);
 }

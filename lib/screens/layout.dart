@@ -116,7 +116,7 @@ class _LayoutState extends State<Layout> {
       ),
       appBar: _inSpecialPage
           ? PreferredSize(
-              preferredSize: Size.fromHeight(90),
+              preferredSize: Size.fromHeight(75),
               child: Container(
                 padding: EdgeInsets.only(
                   top: MediaQuery.of(context).padding.top,
@@ -146,7 +146,7 @@ class _LayoutState extends State<Layout> {
               ),
             )
           : PreferredSize(
-              preferredSize: Size.fromHeight(90),
+              preferredSize: Size.fromHeight(75),
               child: Container(
                 padding: EdgeInsets.only(
                   top: MediaQuery.of(context).padding.top,
