@@ -6,6 +6,9 @@ class Vehicule {
   final String immatriculation;
   final String annee;
   final String couleur;
+  final int kilometrage;
+  final int IntervalKilometrage;
+  final int? dernierVidange;
 
   Vehicule({
     required this.marque,
@@ -15,5 +18,8 @@ class Vehicule {
     required this.immatriculation,
     required this.annee,
     required this.couleur,
+    required this.kilometrage,
+    required this.IntervalKilometrage,
+    this.dernierVidange,
   });
 }

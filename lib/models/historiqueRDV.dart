@@ -5,6 +5,7 @@ class Historiquerdv {
   final String modele;
   final String immatriculation;
   final DateTime date;
+  final String? heure;
 
   Historiquerdv({
     required this.type,
@@ -13,5 +14,6 @@ class Historiquerdv {
     required this.modele,
     required this.immatriculation,
     required this.date,
+    this.heure,
   });
 }
