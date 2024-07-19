@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sav_project/theme/colors.dart';
-import '../widgets/auth/auth_button.dart';
-import '../widgets/auth/auth_prompt.dart';
-import '../widgets/auth/auth_text_field.dart';
-import '../widgets/auth/header_auth.dart';
-import '../widgets/auth/welcome_text.dart';
+import '../../widgets/auth/auth_button.dart';
+import '../../widgets/auth/auth_prompt.dart';
+import '../../widgets/auth/auth_text_field.dart';
+import '../../widgets/auth/header_auth.dart';
+import '../../widgets/auth/welcome_text.dart';
 // Constants
 
 //Button

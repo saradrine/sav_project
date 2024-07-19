@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sav_project/models/offer.dart';
-import 'package:sav_project/theme/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class SpecialOffers extends StatelessWidget {

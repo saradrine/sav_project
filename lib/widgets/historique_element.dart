@@ -24,7 +24,7 @@ class _HistoriqueElementState extends State<HistoriqueElement> {
   );
   static const TextStyle infoTextStyle = TextStyle(
     fontWeight: FontWeight.w500,
-    fontSize: 15,
+    fontSize: 14,
   );
 
   @override
@@ -123,9 +123,9 @@ class _HistoriqueElementState extends State<HistoriqueElement> {
                 ),
               ),
               TextSpan(
-                text: "${widget.historique.type}",
+                text: "${widget.historique.service.nom}",
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 17,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
@@ -134,9 +134,10 @@ class _HistoriqueElementState extends State<HistoriqueElement> {
           ),
         ),
         Text(
-          widget.historique.state,
+          widget.historique.etat,
           style: stateTextStyle.copyWith(
-            color: _getStateColor(widget.historique.state),
+            color: _getStateColor(widget.historique.etat),
+            fontSize: 16,
           ),
         ),
       ],
@@ -149,7 +150,8 @@ class _HistoriqueElementState extends State<HistoriqueElement> {
       child: Row(
         children: [
           Text('Véhicule:  ', style: infoTextStyle),
-          Text('${widget.historique.marque} - ${widget.historique.modele}',
+          Text(
+              '${widget.historique.vehicule.marque} - ${widget.historique.vehicule.modele}',
               style: infoTextStyle),
         ],
       ),
@@ -162,7 +164,7 @@ class _HistoriqueElementState extends State<HistoriqueElement> {
       child: Row(
         children: [
           Text(
-            widget.historique.immatriculation,
+            widget.historique.vehicule.immatriculation!,
             style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -179,10 +181,11 @@ class _HistoriqueElementState extends State<HistoriqueElement> {
       child: Row(
         children: [
           Text(
-            'Le ${widget.historique.date.day}/${widget.historique.date.month}/${widget.historique.date.year} à ${widget.historique.date.hour}:${widget.historique.date.minute}',
+            'Le ${widget.historique.date.day}/${widget.historique.date.month}/${widget.historique.date.year} à ${widget.historique.heure}',
             style: TextStyle(
               color: AppColors.hintColor,
               fontWeight: FontWeight.w500,
+              fontSize: 12,
             ),
           ),
         ],
@@ -197,8 +200,10 @@ class _HistoriqueElementState extends State<HistoriqueElement> {
       // Color(0xFF039388)
       case "Refusé":
         return AppColors.deleteColor;
-      case "En cours":
+      case "En attente":
         return Color(0xFFCFAE00);
+      case "Terminé":
+        return AppColors.blue;
       default:
         return AppColors.hintColor;
     }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sav_project/models/user.dart';
+import 'package:sav_project/providers/user_provider.dart';
 import 'package:sav_project/screens/layout.dart';
+import 'package:sav_project/services/user_service.dart';
 import 'package:sav_project/theme/colors.dart';
 import 'package:sav_project/widgets/profile/change_pwd_form.dart';
 import 'package:sav_project/widgets/profile/profile_fields.dart';
@@ -12,15 +15,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  var user = User(
-    firstName: 'Abderrahmen Abderrahmen Abderrahmen',
-    lastName: 'Doe',
-    email: 'foulen@gmail.com',
-    phone: '12345678',
-    job: 'Développeur',
-    address: 'Tunis',
-    birthDate: DateTime(1999, 12, 31),
-  );
+
 
   bool _isEditing = false;
 
@@ -36,6 +31,8 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = context.watch<UserProvider>().user;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: _isEditing
@@ -46,7 +43,7 @@ class _ProfileState extends State<Profile> {
                     label: 'Prénom:',
                     icon: 'user.png',
                     widgetType: WidgetType.TextInputStyling,
-                    content: user.firstName,
+                    content: user!.firstName ?? '',
                     width: 26,
                   ),
                   ProfileFieldDetail(

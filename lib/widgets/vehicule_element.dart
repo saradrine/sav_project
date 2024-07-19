@@ -4,7 +4,7 @@ import 'package:sav_project/theme/colors.dart';
 
 // Constants for styles
 const _textStyle = TextStyle(
-    color: AppColors.iconColor, fontWeight: FontWeight.w500, fontSize: 15);
+    color: AppColors.iconColor, fontWeight: FontWeight.w500, fontSize: 14);
 
 class VehiculeElement extends StatefulWidget {
   final Vehicule vehicule;
@@ -42,7 +42,7 @@ class _VehiculeElementState extends State<VehiculeElement> {
                     '${widget.vehicule.marque} - ${widget.vehicule.modele}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: 17,
                     ),
                   ),
                 ],
@@ -136,7 +136,7 @@ class _VehiculeElementState extends State<VehiculeElement> {
             children: [
               Text(
                 '${widget.vehicule.marque} - ${widget.vehicule.modele}',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               GestureDetector(
                 onTap: _showOptionsDialog,
@@ -152,19 +152,19 @@ class _VehiculeElementState extends State<VehiculeElement> {
           SizedBox(height: 8),
           IconTextRow(
             iconPath: 'assets/icons/car.png',
-            text: widget.vehicule.type,
+            text: widget.vehicule.type ?? '',
           ),
           SizedBox(height: 4),
           IconTextRow(
             iconPath: 'assets/icons/numero-de-serie.png',
-            text: widget.vehicule.numChassis,
+            text: widget.vehicule.numChassis ?? '',
             width: 22,
             height: 22,
           ),
           SizedBox(height: 4),
           IconTextRow(
             iconPath: 'assets/icons/Immatriculation.png',
-            text: widget.vehicule.immatriculation,
+            text: widget.vehicule.immatriculation ?? '',
           ),
           SizedBox(height: 4),
           Row(
@@ -172,14 +172,14 @@ class _VehiculeElementState extends State<VehiculeElement> {
             children: [
               IconTextRow(
                 iconPath: 'assets/icons/calendarGray.png',
-                text: widget.vehicule.annee,
+                text: widget.vehicule.annee ?? '',
                 width: 22,
                 height: 22,
               ),
               SizedBox(width: 40),
               IconTextRow(
                 iconPath: 'assets/icons/pallete.png',
-                text: widget.vehicule.couleur,
+                text: widget.vehicule.couleur ?? '',
                 width: 25,
                 height: 25,
               ),
