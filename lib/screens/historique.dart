@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sav_project/models/historiqueRDV.dart';
+import 'package:sav_project/models/user.dart';
+import 'package:sav_project/providers/user_provider.dart';
 import 'package:sav_project/theme/colors.dart';
 import '../widgets/historique_element.dart';
 
@@ -11,49 +14,21 @@ class Historique extends StatefulWidget {
 }
 
 class _HistoriqueState extends State<Historique> {
-  List<Historiquerdv> historiques = [
-    Historiquerdv(
-        type: 'Vidange',
-        state: 'Accepté',
-        marque: 'Volkswagon',
-        modele: 'Tiguan',
-        immatriculation: '218-TUN-7066',
-        date: DateTime.parse('2024-06-29 12:15:00')),
-    Historiquerdv(
-        type: 'Vidange',
-        state: 'Refusé',
-        marque: 'Volkswagon',
-        modele: 'Passat',
-        immatriculation: '218-TUN-7066',
-        date: DateTime.parse('2024-06-29 12:15:00')),
-    Historiquerdv(
-        type: 'Vidange',
-        state: 'En cours',
-        marque: 'Volkswagon',
-        modele: 'Golf',
-        immatriculation: '218-TUN-7066',
-        date: DateTime.parse('2024-06-29 12:15:00')),
-    Historiquerdv(
-        type: 'Vidange',
-        state: 'Annulé',
-        marque: 'Volkswagon',
-        modele: 'Polo',
-        immatriculation: '218-TUN-7066',
-        date: DateTime.parse('2024-06-29 12:15:00')),
-  ];
-
+  
   void onDismissed(Historiquerdv historique) {
     setState(() {
-      historiques.remove(historique);
+      // historiques.remove(historique);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+   User? user = context.watch<UserProvider>().user;
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 16),
-        child: historiques.isEmpty
+        child: user!.appointments.isEmpty
             ? Center(
                 child: Text(
                   "Vous n'avez encore aucun historique.",
@@ -65,10 +40,10 @@ class _HistoriqueState extends State<Historique> {
                 ),
               )
             : ListView.builder(
-                itemCount: historiques.length,
+                itemCount: user.appointments.length,
                 itemBuilder: (context, index) {
                   return HistoriqueElement(
-                    historique: historiques[index],
+                    historique: user.appointments[index],
                     onDismissed: onDismissed,
                   );
                 },

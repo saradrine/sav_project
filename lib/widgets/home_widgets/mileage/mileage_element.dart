@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sav_project/models/historiqueRDV.dart';
 import 'package:sav_project/models/vehicule.dart';
 import 'package:sav_project/theme/colors.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class MileageElement extends StatefulWidget {
   final Vehicule vehicule;
   const MileageElement({Key? key, required this.vehicule}) : super(key: key);
+
   @override
   State<MileageElement> createState() => _MileageElementState();
 }
@@ -14,6 +13,12 @@ class MileageElement extends StatefulWidget {
 class _MileageElementState extends State<MileageElement> {
   @override
   Widget build(BuildContext context) {
+    final intervalKilometrage = widget.vehicule.intervalKilometrage ?? 0;
+    final kilometrage = widget.vehicule.kilometrage ?? 0;
+    final dernierVidange = widget.vehicule.dernierVidange ?? 0;
+
+    final remainingKm = intervalKilometrage - (kilometrage - dernierVidange);
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -68,7 +73,7 @@ class _MileageElementState extends State<MileageElement> {
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                       TextSpan(
-                        text: '${widget.vehicule.kilometrage} km',
+                        text: '${kilometrage} km',
                         style: TextStyle(
                           fontSize: 13,
                         ),
@@ -86,8 +91,7 @@ class _MileageElementState extends State<MileageElement> {
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                       TextSpan(
-                        text:
-                            '${widget.vehicule.IntervalKilometrage - (widget.vehicule.kilometrage - widget.vehicule.dernierVidange!)} km',
+                        text: '${remainingKm} km',
                         style: TextStyle(
                           fontSize: 13,
                         ),

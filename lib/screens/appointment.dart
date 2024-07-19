@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sav_project/models/service.dart';
+import 'package:sav_project/providers/services_provider.dart';
 import 'package:sav_project/widgets/field_input.dart';
 import 'package:sav_project/widgets/form.dart';
 
@@ -10,6 +13,7 @@ class Appointment extends StatefulWidget {
 class _AppointmentState extends State<Appointment> {
   @override
   Widget build(BuildContext context) {
+    List<Service>? services = context.watch<ServicesProvider>().services;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -75,7 +79,7 @@ class _AppointmentState extends State<Appointment> {
                 FieldDetail(
                   label: 'Service',
                   icon: 'customer-support.png',
-                  items: ['Vidange', 'Réparation', 'Diagnostic'],
+                  items: services!.map((service) => service.nom).toList(),
                   widgetType: WidgetType.DropDownInputStyling,
                   width: 23,
                 ),

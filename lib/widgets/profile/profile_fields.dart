@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sav_project/models/user.dart';
 
-String formatDate(DateTime date) {
+String formatDate(DateTime? date) {
+  if (date == null) return '';
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   return formatter.format(date);
 }
 
 class ProfileFields extends StatelessWidget {
-  final User user;
+  final User? user;
 
   ProfileFields({required this.user});
 
@@ -17,46 +18,48 @@ class ProfileFields extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          Field(
-            content: user.firstName,
-            icon: 'assets/icons/user.png',
-            width: 26,
-          ),
-          SizedBox(height: 13),
-          Field(
-            content: user.lastName,
-            icon: 'assets/icons/user.png',
-            width: 26,
-          ),
-          SizedBox(height: 13),
-          Field(
-            content: user.email,
-            icon: 'assets/icons/email.png',
-            width: 23,
-          ),
-          SizedBox(height: 13),
-          Field(
-            content: user.phone,
-            icon: 'assets/icons/mobile-phone.png',
-          ),
-          SizedBox(height: 13),
-          Field(
-            content: user.job,
-            icon: 'assets/icons/suitcase.png',
-            width: 23,
-          ),
-          SizedBox(height: 13),
-          Field(
-            content: user.address,
-            icon: 'assets/icons/gps-navigation.png',
-            width: 26,
-          ),
-          SizedBox(height: 13),
-          Field(
-            content: formatDate(user.birthDate).toString(),
-            icon: 'assets/icons/cake.png',
-            width: 23,
-          ),
+          if (user != null) ...[
+            Field(
+              content: user!.firstName ?? '',
+              icon: 'assets/icons/user.png',
+              width: 26,
+            ),
+            SizedBox(height: 13),
+            Field(
+              content: user!.lastName ?? '',
+              icon: 'assets/icons/user.png',
+              width: 26,
+            ),
+            SizedBox(height: 13),
+            Field(
+              content: user!.email ?? '',
+              icon: 'assets/icons/email.png',
+              width: 23,
+            ),
+            SizedBox(height: 13),
+            Field(
+              content: user!.phone ?? '',
+              icon: 'assets/icons/mobile-phone.png',
+            ),
+            SizedBox(height: 13),
+            Field(
+              content: user!.job ?? '',
+              icon: 'assets/icons/suitcase.png',
+              width: 23,
+            ),
+            SizedBox(height: 13),
+            Field(
+              content: user!.address ?? '',
+              icon: 'assets/icons/gps-navigation.png',
+              width: 26,
+            ),
+            SizedBox(height: 13),
+            Field(
+              content: formatDate(user!.birthDate),
+              icon: 'assets/icons/cake.png',
+              width: 23,
+            ),
+          ],
         ],
       ),
     );

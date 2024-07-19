@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sav_project/models/historiqueRDV.dart';
 import 'package:sav_project/theme/colors.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:intl/intl.dart';
 
 class UpcomingElement extends StatefulWidget {
@@ -34,7 +33,7 @@ class _UpcomingElementState extends State<UpcomingElement> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${widget.historique.marque} - ${widget.historique.modele}',
+            '${widget.historique.vehicule.marque} - ${widget.historique.vehicule.modele}',
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
           ),
           SizedBox(height: 8),
@@ -46,7 +45,7 @@ class _UpcomingElementState extends State<UpcomingElement> {
               ),
               children: <TextSpan>[
                 TextSpan(
-                  text: '${widget.historique.type}',
+                  text: '${widget.historique.service.nom} ',
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                   ),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sav_project/models/user.dart';
 import 'package:sav_project/models/vehicule.dart';
+import 'package:sav_project/providers/user_provider.dart';
 import 'package:sav_project/theme/colors.dart';
 import '../widgets/vehicule_element.dart';
 import '../widgets/button.dart';
@@ -13,61 +16,16 @@ class MyVehicules extends StatefulWidget {
 }
 
 class _MyVehiculesState extends State<MyVehicules> {
-  List<Vehicule> vehicules = [
-    Vehicule(
-      marque: 'Volkswagon',
-      modele: 'Tiguan',
-      type: 'Voiture',
-      numChassis: '3VWDD21C8YM448564',
-      immatriculation: '218-TUN-7066',
-      annee: '2015',
-      couleur: 'Noir',
-      kilometrage: 100000,
-      IntervalKilometrage: 15000,
-    ),
-    Vehicule(
-      marque: 'Volkswagon',
-      modele: 'Passat',
-      type: 'Voiture',
-      numChassis: '3VWDD21C8YM548564',
-      immatriculation: '218-TUN-7066',
-      annee: '2015',
-      couleur: 'Blanc',
-      kilometrage: 100000,
-      IntervalKilometrage: 15000,
-    ),
-    Vehicule(
-      marque: 'Volkswagon',
-      modele: 'Polo',
-      type: 'Voiture',
-      numChassis: '3VWDD21C8YM448564',
-      immatriculation: '218-TUN-7066',
-      annee: '2015',
-      couleur: 'Rouge',
-      kilometrage: 100000,
-      IntervalKilometrage: 15000,
-    ),
-    Vehicule(
-      marque: 'Volkswagon',
-      modele: 'Polo',
-      type: 'Voiture',
-      numChassis: '3VWDD21C8YM448564',
-      immatriculation: '218-TUN-7066',
-      annee: '2015',
-      couleur: 'Rouge',
-      kilometrage: 100000,
-      IntervalKilometrage: 15000,
-    ),
-  ];
-
   void onDismissed(Vehicule vehicule) {
     setState(() {
-      vehicules.remove(vehicule);
+      // vehicules.remove(vehicule);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    User? user = context.watch<UserProvider>().user;
+
     return Scaffold(
       body: Column(
         children: [
@@ -92,15 +50,13 @@ class _MyVehiculesState extends State<MyVehicules> {
               ),
             ],
           ),
-          vehicules.isEmpty
+          user!.vehicules.isEmpty
               ? Center(
                   child: Text(
                     "Vous n'avez encore ajouté aucune voiture.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 16,
-                      color: AppColors.emptyTextColor
-                    ),
+                        fontSize: 16, color: AppColors.emptyTextColor),
                   ),
                 )
               : Flexible(
@@ -110,10 +66,10 @@ class _MyVehiculesState extends State<MyVehicules> {
                       vertical: 16,
                     ),
                     child: ListView.builder(
-                      itemCount: vehicules.length,
+                      itemCount: user.vehicules.length,
                       itemBuilder: (context, index) {
                         return VehiculeElement(
-                          vehicule: vehicules[index],
+                          vehicule: user.vehicules[index],
                           onDismissed: onDismissed,
                         );
                       },
