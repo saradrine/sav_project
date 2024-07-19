@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sav_project/models/vehicule.dart';
 import 'package:sav_project/theme/colors.dart';
+import 'car_information.dart';
 
 // Constants for styles
 const _textStyle = TextStyle(
@@ -114,78 +115,67 @@ class _VehiculeElementState extends State<VehiculeElement> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 0,
-            blurRadius: 1,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 22),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '${widget.vehicule.marque} - ${widget.vehicule.modele}',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-              ),
-              GestureDetector(
-                onTap: _showOptionsDialog,
-                child: Image.asset(
-                  'assets/icons/option.png',
-                  width: 25,
-                  height: 25,
-                  color: AppColors.iconColor,
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CarInformation(widget: widget);
+          },
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 0,
+              blurRadius: 1,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${widget.vehicule.marque} - ${widget.vehicule.modele}',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: 8),
-          IconTextRow(
-            iconPath: 'assets/icons/car.png',
-            text: widget.vehicule.type,
-          ),
-          SizedBox(height: 4),
-          IconTextRow(
-            iconPath: 'assets/icons/numero-de-serie.png',
-            text: widget.vehicule.numChassis,
-            width: 22,
-            height: 22,
-          ),
-          SizedBox(height: 4),
-          IconTextRow(
-            iconPath: 'assets/icons/Immatriculation.png',
-            text: widget.vehicule.immatriculation,
-          ),
-          SizedBox(height: 4),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconTextRow(
-                iconPath: 'assets/icons/calendarGray.png',
-                text: widget.vehicule.annee,
-                width: 22,
-                height: 22,
-              ),
-              SizedBox(width: 40),
-              IconTextRow(
-                iconPath: 'assets/icons/pallete.png',
-                text: widget.vehicule.couleur,
-                width: 25,
-                height: 25,
-              ),
-            ],
-          ),
-        ],
+                GestureDetector(
+                  onTap: _showOptionsDialog,
+                  child: Image.asset(
+                    'assets/icons/option.png',
+                    width: 25,
+                    height: 25,
+                    color: AppColors.iconColor,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconTextRow(
+                  iconPath: 'assets/icons/speed.png',
+                  text: widget.vehicule.kilometrage.toString(),
+                ),
+                SizedBox(height: 4),
+                IconTextRow(
+                  iconPath: 'assets/icons/car.png',
+                  text: widget.vehicule.dernierVidange.toString(),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

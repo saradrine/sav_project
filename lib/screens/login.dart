@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sav_project/screens/signUp.dart';
 import 'package:sav_project/theme/colors.dart';
 import '../widgets/auth/auth_button.dart';
 import '../widgets/auth/auth_prompt.dart';
@@ -81,7 +82,14 @@ class _LoginState extends State<Login> {
               AuthPrompt(
                   sentence: 'Vous débutez avec XXX?',
                   action: 'S’inscrire',
-                  onPressed: () {}),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignUp(),
+                      ),
+                    );
+                  }),
             ],
           ),
         ),

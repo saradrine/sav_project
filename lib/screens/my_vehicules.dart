@@ -98,9 +98,7 @@ class _MyVehiculesState extends State<MyVehicules> {
                     "Vous n'avez encore ajouté aucune voiture.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 16,
-                      color: AppColors.emptyTextColor
-                    ),
+                        fontSize: 16, color: AppColors.emptyTextColor),
                   ),
                 )
               : Flexible(

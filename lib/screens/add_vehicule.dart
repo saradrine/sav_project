@@ -69,6 +69,11 @@ class _AddVehiculeState extends State<AddVehicule> {
                   icon: 'Immatriculation.png',
                   widgetType: WidgetType.TextInputStyling,
                 ),
+                FieldDetail(
+                  label: "Kilométrage",
+                  icon: 'speed.png',
+                  widgetType: WidgetType.TextInputStyling,
+                ),
               ],
             ),
           ],

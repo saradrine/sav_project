@@ -13,4 +13,5 @@ class AppColors {
   static const emptyTextColor = Color.fromARGB(255, 131, 130, 130);
   static const deleteColor = Color(0xFFB50000);
   static const lightGreen = Color(0xFFe5f3f0);
+  static const borderColor = Color.fromARGB(255, 239, 236, 236);
 }
