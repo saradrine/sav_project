@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:sav_project/screens/login.dart';
 import 'package:sav_project/theme/colors.dart';
 import 'package:sav_project/widgets/field_input.dart' as FieldInput;
-import '../widgets/auth/auth_button.dart';
-import '../widgets/auth/auth_text_field.dart';
-import '../widgets/auth/header_auth.dart';
-import '../widgets/auth/welcome_text.dart';
-import '../widgets/auth/auth_prompt.dart';
+import '../../widgets/auth/auth_button.dart';
+import '../../widgets/auth/auth_text_field.dart';
+import '../../widgets/auth/header_auth.dart';
+import '../../widgets/auth/welcome_text.dart';
+import '../../widgets/auth/auth_prompt.dart';
 
 class SignUp extends StatefulWidget {
   @override

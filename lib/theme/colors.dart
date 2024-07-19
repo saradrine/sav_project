@@ -14,4 +14,5 @@ class AppColors {
   static const deleteColor = Color(0xFFB50000);
   static const lightGreen = Color(0xFFe5f3f0);
   static const borderColor = Color.fromARGB(255, 239, 236, 236);
+  static const blue = Color(0xFF1886e0);
 }

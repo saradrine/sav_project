@@ -5,7 +5,7 @@ import 'car_information.dart';
 
 // Constants for styles
 const _textStyle = TextStyle(
-    color: AppColors.iconColor, fontWeight: FontWeight.w500, fontSize: 15);
+    color: AppColors.iconColor, fontWeight: FontWeight.w500, fontSize: 14);
 
 class VehiculeElement extends StatefulWidget {
   final Vehicule vehicule;
@@ -43,7 +43,7 @@ class _VehiculeElementState extends State<VehiculeElement> {
                     '${widget.vehicule.marque} - ${widget.vehicule.modele}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: 17,
                     ),
                   ),
                 ],
@@ -165,13 +165,13 @@ class _VehiculeElementState extends State<VehiculeElement> {
               children: [
                 IconTextRow(
                   iconPath: 'assets/icons/speed.png',
-                  text: widget.vehicule.kilometrage.toString(),
+                  text: widget.vehicule.kilometrage.toString() ?? '',
                 ),
                 SizedBox(height: 4),
-                IconTextRow(
-                  iconPath: 'assets/icons/car.png',
-                  text: widget.vehicule.dernierVidange.toString(),
-                ),
+                // IconTextRow(
+                //   iconPath: 'assets/icons/car.png',
+                //   text: widget.vehicule.dernierVidange.toString(),
+                // ),
               ],
             ),
           ],

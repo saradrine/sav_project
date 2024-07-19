@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sav_project/models/user.dart';
+import 'package:sav_project/providers/user_provider.dart';
 import 'package:sav_project/theme/colors.dart';
 
 class WelcomeBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    User? user = context.watch<UserProvider>().user;
+    final firstName = user?.firstName ?? '';
+    final lastName = user?.lastName ?? '';
     return Stack(
       children: [
         Container(
@@ -30,7 +36,7 @@ class WelcomeBanner extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Bonjour, John Doe !',
+                      'Bonjour, '+'$firstName $lastName'+' !',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 17,
