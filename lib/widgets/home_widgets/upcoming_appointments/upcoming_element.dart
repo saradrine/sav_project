@@ -33,7 +33,7 @@ class _UpcomingElementState extends State<UpcomingElement> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${widget.historique.vehicule.marque} - ${widget.historique.vehicule.modele}',
+            '${widget.historique.vehicule!.marque} - ${widget.historique.vehicule!.modele}',
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
           ),
           SizedBox(height: 8),
@@ -45,7 +45,7 @@ class _UpcomingElementState extends State<UpcomingElement> {
               ),
               children: <TextSpan>[
                 TextSpan(
-                  text: '${widget.historique.service.nom} ',
+                  text: '${widget.historique.service!.nom} ',
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                   ),

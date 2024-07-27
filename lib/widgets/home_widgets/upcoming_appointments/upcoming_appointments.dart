@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sav_project/models/historiqueRDV.dart';
 import 'package:sav_project/models/user.dart';
 import 'package:sav_project/providers/user_provider.dart';
+import 'package:sav_project/screens/layout.dart';
 import 'package:sav_project/theme/colors.dart';
 import 'package:sav_project/widgets/home_widgets/upcoming_appointments/upcoming_element.dart';
 
@@ -42,7 +43,16 @@ class UpcomingAppointments extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Layout(
+                        specialPageIndex: 5,
+                      ),
+                    ),
+                  );
+                },
                 child: Text(
                   'Voir historique',
                   style: TextStyle(

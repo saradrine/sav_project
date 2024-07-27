@@ -2,40 +2,44 @@ import 'service.dart';
 import 'vehicule.dart';
 
 class Historiquerdv {
+  final int id;
   final DateTime date;
   final String heure;
-  final int kilometrage;
-  final Service service;
-  final Vehicule vehicule;
-  final String etat;
+  final int? kilometrage;
+  final Service? service;
+  final Vehicule? vehicule;
+  final String? etat;
 
   Historiquerdv({
+    required this.id,
     required this.date,
     required this.heure,
-    required this.kilometrage,
-    required this.service,
-    required this.vehicule,
-    required this.etat,
+    this.kilometrage,
+    this.service,
+    this.vehicule,
+    this.etat,
   });
 
   factory Historiquerdv.fromJson(Map<String, dynamic> json) {
     return Historiquerdv(
+      id: int.parse(json['id']),
       date: DateTime.parse(json['date']),
-      heure: json['heure'],
+      heure: json['heure'] ?? '',
       kilometrage: json['kilometrage'],
-      service: Service.fromJson(json['service']),
-      vehicule: Vehicule.fromJson(json['vehicule']),
+      service: json['service'] != null ? Service.fromJson(json['service']) : null,
+      vehicule: json['vehicule'] != null ? Vehicule.fromJson(json['vehicule']) : null,
       etat: json['etat'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'date': date.toIso8601String(),
       'heure': heure,
       'kilometrage': kilometrage,
-      'service': service.toJson(),
-      'vehicule': vehicule.toJson(),
+      'service': service?.toJson(),
+      'vehicule': vehicule?.toJson(),
       'etat': etat,
     };
   }

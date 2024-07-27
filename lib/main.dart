@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:sav_project/graphql/graphql_client.dart';
 import 'package:sav_project/providers/services_provider.dart';
@@ -13,7 +14,7 @@ import 'package:sav_project/screens/auth/signUp.dart';
 import 'package:sav_project/theme/colors.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-void main() {
+void main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: AppColors.kBaseColor,
     systemNavigationBarColor: const Color.fromARGB(255, 246, 248, 251),
@@ -23,7 +24,7 @@ void main() {
     DeviceOrientation.portraitUp,
   ]);
   // await initHiveForFlutter();
-
+  await dotenv.load(fileName: ".env");
   runApp(
     MultiProvider(
       providers: [
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isLoggedIn = false;
     context.read<UserProvider>().fetchUserById('24');
+    context.read<UserProvider>().createVehicle();
     context.read<ServicesProvider>().fetchServices();
     return GraphQLProvider(
       client: GraphqlClient.client,

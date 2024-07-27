@@ -2,6 +2,7 @@ import 'package:sav_project/models/historiqueRDV.dart';
 import 'package:sav_project/models/vehicule.dart';
 
 class User {
+  final int id;
   final String role;
   final String firstName;
   final String lastName;  
@@ -17,6 +18,7 @@ class User {
 
 
   User({
+    required this.id,
     required this.role,
     required this.firstName,
     required this.lastName,
@@ -33,6 +35,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
+      id: int.parse(json['id']),
       role: json['role'],
       firstName: json['prenom'],
       lastName: json['nom'],
@@ -46,14 +49,15 @@ class User {
       vehicules: (json['vehicules'] as List<dynamic>)
           .map((item) => Vehicule.fromJson(item as Map<String, dynamic>))
           .toList(),
-      appointments: (json['appointments'] as List<dynamic>)
-          .map((item) => Historiquerdv.fromJson(item as Map<String, dynamic>))
-          .toList(),
+      appointments: (json['appointments'] as List<dynamic>?)
+          ?.map((item) => Historiquerdv.fromJson(item as Map<String, dynamic>))
+          .toList() ?? [],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'role': role,
       'prenom': firstName,
       'nom': lastName,

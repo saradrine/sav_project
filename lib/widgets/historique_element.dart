@@ -123,7 +123,7 @@ class _HistoriqueElementState extends State<HistoriqueElement> {
                 ),
               ),
               TextSpan(
-                text: "${widget.historique.service.nom}",
+                text: "${widget.historique.service!.nom}",
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
@@ -134,9 +134,9 @@ class _HistoriqueElementState extends State<HistoriqueElement> {
           ),
         ),
         Text(
-          widget.historique.etat,
+          widget.historique.etat!,
           style: stateTextStyle.copyWith(
-            color: _getStateColor(widget.historique.etat),
+            color: _getStateColor(widget.historique.etat!),
             fontSize: 16,
           ),
         ),
@@ -151,7 +151,7 @@ class _HistoriqueElementState extends State<HistoriqueElement> {
         children: [
           Text('Véhicule:  ', style: infoTextStyle),
           Text(
-              '${widget.historique.vehicule.marque} - ${widget.historique.vehicule.modele}',
+              '${widget.historique.vehicule!.marque} - ${widget.historique.vehicule!.modele}',
               style: infoTextStyle),
         ],
       ),
@@ -164,7 +164,7 @@ class _HistoriqueElementState extends State<HistoriqueElement> {
       child: Row(
         children: [
           Text(
-            widget.historique.vehicule.immatriculation!,
+            widget.historique.vehicule?.immatriculation ?? '',
             style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
