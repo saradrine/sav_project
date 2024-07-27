@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class GraphqlClient {
   static final HttpLink httpLink = HttpLink(
-    'http://192.168.137.1:3000/graphql',
+    dotenv.env['API_URL'] ?? 'http://192.168.1.5:3000/graphql',
   );
+  static final WebSocketLink webSocketLink =
+      WebSocketLink(dotenv.env['WS_URL'] ?? 'ws://localhost:3000/graphql');
 
-  static final ValueNotifier<GraphQLClient> client = ValueNotifier<GraphQLClient>(
+static final Link link = Link.split((request) => request.isSubscription, webSocketLink, httpLink);
+
+  static final ValueNotifier<GraphQLClient> client =
+      ValueNotifier<GraphQLClient>(
     GraphQLClient(
-      link: httpLink as Link,
+      link: link,
       cache: GraphQLCache(store: InMemoryStore()),
-
     ),
   );
 }

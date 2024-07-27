@@ -10,24 +10,29 @@ class Notifications extends StatefulWidget {
 class _NotificationsState extends State<Notifications> {
   List<Notif> notifications = [
     Notif(
+      id: 1,
       text: 'Today Lorem Ipsum is simply dummy text simply dummy text.',
       date: DateTime.parse('2024-06-29 12:15:00'),
       isUnRead: true,
     ),
     Notif(
+      id: 2,
       text: 'Today Lorem Ipsum is simply dummy text simply dummy text.',
       date: DateTime.parse('2024-06-29 01:30:00'),
       isUnRead: true,
     ),
     Notif(
+      id: 3,
       text: 'Today Lorem Ipsum is simply dummy text simply dummy text.',
       date: DateTime.parse('2024-06-29 00:30:00'),
     ),
     Notif(
+      id: 4,
       text: 'Last 3 Lorem Ipsum is simply dummy text simply dummy text.',
       date: DateTime.parse('2024-06-26 14:30:00'),
     ),
     Notif(
+      id: 5,
       text: 'Last 10 Lorem Ipsum is simply dummy text simply dummy text.',
       date: DateTime.parse('2024-06-19 10:00:00'),
     ),

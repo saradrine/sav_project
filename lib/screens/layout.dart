@@ -12,8 +12,9 @@ import 'package:sav_project/screens/settings.dart';
 
 class Layout extends StatefulWidget {
   final int initialIndex;
+  final int? specialPageIndex;
 
-  const Layout({super.key, this.initialIndex = 0});
+  const Layout({super.key, this.initialIndex = 0, this.specialPageIndex});
 
   @override
   State<Layout> createState() => _LayoutState();
@@ -63,6 +64,9 @@ class _LayoutState extends State<Layout> {
     super.initState();
     _selectedIndex = widget.initialIndex;
     _lastIndex = widget.initialIndex;
+    if (widget.specialPageIndex != null) {
+      _tappedSpecialPage(widget.specialPageIndex!);
+    }
   }
 
   void _tappedSpecialPage(int index) {

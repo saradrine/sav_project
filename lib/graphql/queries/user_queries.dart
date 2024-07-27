@@ -1,6 +1,7 @@
 const String getClientById = r'''
 query client($id: ID!) {
   client(id: $id) {
+    id
     role
     nom
     prenom
@@ -12,6 +13,7 @@ query client($id: ID!) {
     dateNaissance
     emploi
     vehicules {
+    id
     marque
     modele
     numChassis
@@ -20,9 +22,20 @@ query client($id: ID!) {
     annee
     couleur
     kilometrage
-    }
     appointments {
+      id
       service {
+        id
+        name
+      }
+      date
+      heure
+    }
+  }
+    appointments {
+      id
+      service {
+        id
         name
       } 
       date 
@@ -30,6 +43,7 @@ query client($id: ID!) {
       kilometrage 
       etat 
       vehicule {
+        id
         marque 
         modele 
         numChassis
