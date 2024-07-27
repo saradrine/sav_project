@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sav_project/screens/login.dart';
+import 'package:sav_project/screens/auth/login.dart';
 
 class ConfirmationSuccess extends StatelessWidget {
   const ConfirmationSuccess({Key? key}) : super(key: key);

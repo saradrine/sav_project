@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sav_project/screens/signUp.dart';
+import 'package:sav_project/screens/auth/signUp.dart';
 import 'package:sav_project/theme/colors.dart';
 import '../../widgets/auth/auth_button.dart';
 import '../../widgets/auth/auth_prompt.dart';

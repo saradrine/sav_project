@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sav_project/screens/login.dart';
+import 'package:sav_project/screens/auth/login.dart';
 import 'package:sav_project/theme/colors.dart';
 import 'package:sav_project/widgets/field_input.dart' as FieldInput;
 import '../../widgets/auth/auth_button.dart';
