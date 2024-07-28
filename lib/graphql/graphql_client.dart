@@ -7,10 +7,9 @@ class GraphqlClient {
     dotenv.env['API_URL'] ?? 'http://192.168.1.5:3000/graphql',
   );
   static final WebSocketLink webSocketLink =
-      WebSocketLink(dotenv.env['WS_URL'] ?? 'ws://localhost:3000/graphql');
+      WebSocketLink('ws://192.168.1.5:3000/graphql');
 
 static final Link link = Link.split((request) => request.isSubscription, webSocketLink, httpLink);
-
   static final ValueNotifier<GraphQLClient> client =
       ValueNotifier<GraphQLClient>(
     GraphQLClient(

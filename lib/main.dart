@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:sav_project/graphql/graphql_client.dart';
+import 'package:sav_project/providers/notifications_provider.dart';
 import 'package:sav_project/providers/services_provider.dart';
 import 'package:sav_project/providers/user_provider.dart';
 import 'package:sav_project/screens/account_confirmation/account_confirmation.dart';
@@ -30,6 +31,8 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ServicesProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider())
+
       ],
       child: MyApp(),
     ),
@@ -42,9 +45,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isLoggedIn = false;
-    context.read<UserProvider>().fetchUserById('24');
-    context.read<UserProvider>().createVehicle();
-    context.read<ServicesProvider>().fetchServices();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<UserProvider>().fetchUserById('24');
+      context.read<ServicesProvider>().fetchServices();
+      context.read<NotificationProvider>().fetchAllNotifications();
+      context.read<NotificationProvider>().subscribeToNotifications();
+    });
+
     return GraphQLProvider(
       client: GraphqlClient.client,
       child: MaterialApp(

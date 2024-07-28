@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sav_project/widgets/notification/notification_detail.dart';
-import 'package:sav_project/models/notif.dart';
 
 class NotificationCard extends StatelessWidget {
   final String title;
-  final List<Notif> notifications;
-  final Function(Notif) onDismissed;
+  final List<dynamic> notifications;
+  final Function(String) onDismissed;
 
   const NotificationCard({
     Key? key,
@@ -47,7 +46,7 @@ class NotificationCard extends StatelessWidget {
                         child: Dismissible(
                           key: Key(notification.hashCode.toString()),
                           onDismissed: (direction) {
-                            onDismissed(notification);
+                            onDismissed(notification['id']);
                           },
                           direction: DismissDirection.endToStart,
                           background: Container(

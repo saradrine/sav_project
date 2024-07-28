@@ -40,4 +40,79 @@ class NotificationService {
       return notificationData;
     });
   }
+
+  Future<List<Map<String, dynamic>>> getAllNotifications() async {
+    final QueryOptions options = QueryOptions(
+      document: gql(GET_NOTIFICATIONS),
+    );
+
+    final QueryResult result = await GraphqlClient.client.value.query(options);
+
+    if (result.hasException) {
+      print('Error: ${result.exception.toString()}');
+      throw Exception(result.exception.toString());
+    }
+    
+    final notifications = (result.data!['notifications'] as List)
+        .map((notification) => notification as Map<String, dynamic>)
+        .toList();
+
+    return notifications;
+  }
+    Future<void> deleteNotification(String id) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(DELETE_NOTIFICATION),
+      variables: {
+        'id': id,
+      },
+    );
+
+    final QueryResult result = await GraphqlClient.client.value.mutate(options);
+
+    if (result.hasException) {
+      print('Error: ${result.exception.toString()}');
+      throw Exception(result.exception.toString());
+    }
+
+    final deletedNotification = result.data!['removeNotification'];
+    print('Deleted notification with id: ${deletedNotification['id']}');
+  }
+
+  Future<void> markAsRead(String id) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(MARK_AS_READ),
+      variables: {
+        'id': id,
+      },
+    );
+
+    final QueryResult result = await GraphqlClient.client.value.mutate(options);
+
+    if (result.hasException) {
+      print('Error: ${result.exception.toString()}');
+      throw Exception(result.exception.toString());
+    }
+
+    final markedNotification = result.data!['markAsRead'];
+    print('Marked notification as read with id: ${markedNotification['id']}');
+  }
+  
+  Future<void> markAsSeen(String id) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(MARK_AS_SEEN),
+      variables: {
+        'id': id,
+      },
+    );
+
+    final QueryResult result = await GraphqlClient.client.value.mutate(options);
+
+    if (result.hasException) {
+      print('Error: ${result.exception.toString()}');
+      throw Exception(result.exception.toString());
+    }
+
+    final markedNotification = result.data!['markAsSeen'];
+    print('Marked notification as seen with id: ${markedNotification['id']}');
+  }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sav_project/providers/notifications_provider.dart';
+import 'package:sav_project/services/notifications_service.dart';
 import 'package:sav_project/widgets/notification/notification_card.dart';
-import 'package:sav_project/models/notif.dart';
 
 class Notifications extends StatefulWidget {
   @override
@@ -8,96 +10,88 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
-  List<Notif> notifications = [
-    Notif(
-      id: 1,
-      text: 'Today Lorem Ipsum is simply dummy text simply dummy text.',
-      date: DateTime.parse('2024-06-29 12:15:00'),
-      isUnRead: true,
-    ),
-    Notif(
-      id: 2,
-      text: 'Today Lorem Ipsum is simply dummy text simply dummy text.',
-      date: DateTime.parse('2024-06-29 01:30:00'),
-      isUnRead: true,
-    ),
-    Notif(
-      id: 3,
-      text: 'Today Lorem Ipsum is simply dummy text simply dummy text.',
-      date: DateTime.parse('2024-06-29 00:30:00'),
-    ),
-    Notif(
-      id: 4,
-      text: 'Last 3 Lorem Ipsum is simply dummy text simply dummy text.',
-      date: DateTime.parse('2024-06-26 14:30:00'),
-    ),
-    Notif(
-      id: 5,
-      text: 'Last 10 Lorem Ipsum is simply dummy text simply dummy text.',
-      date: DateTime.parse('2024-06-19 10:00:00'),
-    ),
-  ];
+  
+List<dynamic> filterAndSortNotifications(List<dynamic> notifications, bool Function(DateTime createdAt) condition) {
+  final List<dynamic> filteredNotifications = notifications
+      .where((notification) {
+        final createdAt = DateTime.parse(notification['createdAt']);
+        return condition(createdAt);
+      })
+      .toList();
 
-  List<Notif> getNouveauNotifications() {
-    final today = DateTime.now();
-    return notifications
-        .where((notification) =>
-            notification.date.year == today.year &&
-            notification.date.month == today.month &&
-            notification.date.day == today.day)
-        .toList();
-  }
+  filteredNotifications.sort((a, b) => DateTime.parse(b['createdAt']).compareTo(DateTime.parse(a['createdAt'])));
+  return filteredNotifications;
+}
 
-  List<Notif> getDerniers7JoursNotifications() {
-    final today = DateTime.now();
-    return notifications
-        .where((notification) =>
-            notification.date.isAfter(today.subtract(Duration(days: 7))) &&
-            notification.date.isBefore(today.subtract(Duration(days: 1))))
-        .toList();
-  }
+List<dynamic> getNouveauNotifications(List<dynamic> notifications) {
+  final today = DateTime.now();
+  return filterAndSortNotifications(notifications, (createdAt) =>
+    createdAt.year == today.year &&
+    createdAt.month == today.month &&
+    createdAt.day == today.day
+  );
+}
 
-  List<Notif> getAncienNotifications() {
-    final today = DateTime.now();
-    return notifications
-        .where((notification) =>
-            notification.date.isBefore(today.subtract(Duration(days: 7))))
-        .toList();
-  }
+List<dynamic> getDerniers7JoursNotifications(List<dynamic> notifications) {
+  final now = DateTime.now();
+  final startOfToday = DateTime(now.year, now.month, now.day);
+  final endOfYesterday = startOfToday.subtract(Duration(seconds: 1));
+  final startOfLastWeek = startOfToday.subtract(Duration(days: 7));
 
-  void onDismissed(Notif notification) {
-    setState(() {
-      notifications.remove(notification);
-    });
+  return filterAndSortNotifications(notifications, (createdAt) =>
+    createdAt.isAfter(startOfLastWeek) && createdAt.isBefore(endOfYesterday)
+  );
+}
+
+
+List<dynamic> getAncienNotifications(List<dynamic> notifications) {
+  final today = DateTime.now();
+  final lastWeek = today.subtract(Duration(days: 7));
+  return filterAndSortNotifications(notifications, (createdAt) =>
+    createdAt.isBefore(lastWeek)
+  );
+}
+
+
+  void onDismissed(String id) async {
+    try {
+      await NotificationService().deleteNotification(id);
+      setState(() {
+        final notifications = context.read<NotificationProvider>().notifications;
+        notifications.removeWhere((notification) => notification['id'] == id);      });
+    } catch (e) {
+      print('Failed to delete notification: $e');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final notifications = context.watch<NotificationProvider>().notifications;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 16),
         child: ListView(
           children: [
-            if (getNouveauNotifications().isNotEmpty) ...[
+            if (getNouveauNotifications(notifications).isNotEmpty) ...[
               NotificationCard(
                 title: 'Nouveau',
-                notifications: getNouveauNotifications(),
+                notifications: getNouveauNotifications(notifications),
                 onDismissed: onDismissed,
               ),
               SizedBox(height: 16),
             ],
-            if (getDerniers7JoursNotifications().isNotEmpty) ...[
+            if (getDerniers7JoursNotifications(notifications).isNotEmpty) ...[
               NotificationCard(
                 title: 'Derniers 7 jours',
-                notifications: getDerniers7JoursNotifications(),
+                notifications: getDerniers7JoursNotifications(notifications),
                 onDismissed: onDismissed,
               ),
               SizedBox(height: 16),
             ],
-            if (getAncienNotifications().isNotEmpty)
+            if (getAncienNotifications(notifications).isNotEmpty)
               NotificationCard(
                 title: 'Ancien',
-                notifications: getAncienNotifications(),
+                notifications: getAncienNotifications(notifications),
                 onDismissed: onDismissed,
               ),
             if (notifications.isEmpty)
