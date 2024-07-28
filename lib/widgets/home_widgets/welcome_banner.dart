@@ -8,8 +8,8 @@ class WelcomeBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User? user = context.watch<UserProvider>().user;
-    final firstName = user?.firstName ?? '';
-    final lastName = user?.lastName ?? '';
+    final prenom = user?.prenom ?? '';
+    final nom = user?.nom ?? '';
     return Stack(
       children: [
         Container(
@@ -36,7 +36,7 @@ class WelcomeBanner extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Bonjour, '+'$firstName $lastName'+' !',
+                      'Bonjour, ' + '$prenom $nom' + ' !',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 17,

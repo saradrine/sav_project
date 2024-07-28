@@ -1,57 +1,64 @@
+import 'package:sav_project/enum/sexe.dart';
 import 'package:sav_project/models/historiqueRDV.dart';
 import 'package:sav_project/models/vehicule.dart';
 
 class User {
-  final int id;
+  final String id;
   final String role;
-  final String firstName;
-  final String lastName;  
+  final String prenom;
+  final String nom;
   final String email;
   final int cin;
-  final String phone;
-  final String address; 
-  final String sexe;
-  final DateTime birthDate; 
-  final String job; 
+  final String telephone;
+  final String? adresse;
+  final Sexe sexe;
+  final DateTime? dateNaissance;
+  final String? emploi;
   final List<Vehicule> vehicules;
   final List<Historiquerdv> appointments;
-
 
   User({
     required this.id,
     required this.role,
-    required this.firstName,
-    required this.lastName,
+    required this.prenom,
+    required this.nom,
     required this.email,
     required this.cin,
-    required this.phone,
-    required this.address,
+    required this.telephone,
+    this.adresse,
     required this.sexe,
-    required this.birthDate,
-    required this.job,
+    this.dateNaissance,
+    this.emploi,
     required this.vehicules,
-    required this.appointments, 
+    required this.appointments,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: int.parse(json['id']),
-      role: json['role'],
-      firstName: json['prenom'],
-      lastName: json['nom'],
-      email: json['email'],
-      cin: json['cin'],
-      phone: json['telephone'],
-      address: json['adresse'],
-      sexe: json['sexe'],
-      birthDate: DateTime.parse(json['dateNaissance']),
-      job: json['emploi'],
-      vehicules: (json['vehicules'] as List<dynamic>)
-          .map((item) => Vehicule.fromJson(item as Map<String, dynamic>))
-          .toList(),
+      id: json['id']?.toString() ?? '0',
+      role: json['role'] ?? '',
+      prenom: json['prenom'] ?? '',
+      nom: json['nom'] ?? '',
+      email: json['email'] ?? '',
+      cin: json['cin'] ?? 0,
+      telephone: json['telephone'] ?? '',
+      adresse: json['adresse'],
+      sexe: Sexe.values.firstWhere(
+          (e) => e.toString() == 'Sexe.${json['sexe']}',
+          orElse: () => Sexe.MASCULIN),
+      dateNaissance: json['dateNaissance'] != null
+          ? DateTime.parse(json['dateNaissance'])
+          : DateTime(1970, 1, 1),
+      emploi: json['emploi'],
+      vehicules: (json['vehicules'] as List<dynamic>?)
+              ?.map((item) => Vehicule.fromJson(item as Map<String, dynamic>))
+              .toList() ??
+          [],
       appointments: (json['appointments'] as List<dynamic>?)
-          ?.map((item) => Historiquerdv.fromJson(item as Map<String, dynamic>))
-          .toList() ?? [],
+              ?.map((item) =>
+                  Historiquerdv.fromJson(item as Map<String, dynamic>))
+              .toList() ??
+          [],
     );
   }
 
@@ -59,17 +66,18 @@ class User {
     return {
       'id': id,
       'role': role,
-      'prenom': firstName,
-      'nom': lastName,
+      'prenom': prenom,
+      'nom': nom,
       'email': email,
       'cin': cin,
-      'telephone': phone,
-      'adresse': address,
+      'telephone': telephone,
+      'adresse': adresse,
       'sexe': sexe,
-      'dateNaissance': birthDate.toIso8601String(),
-      'emploi': job,
+      'dateNaissance': dateNaissance?.toIso8601String(),
+      'emploi': emploi,
       'vehicules': vehicules.map((vehicule) => vehicule.toJson()).toList(),
-      'appointments': appointments.map((appointment) => appointment.toJson()).toList(),
+      'appointments':
+          appointments.map((appointment) => appointment.toJson()).toList(),
     };
   }
 }

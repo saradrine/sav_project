@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:sav_project/graphql/graphql_client.dart';
 import 'package:sav_project/graphql/queries/notification_queries.dart';
 
 class NotificationService {
   
-  Stream<Map<String, dynamic>> subscribeToAppointmentCreated(String role) {
+  Stream<Map<String, dynamic>> subscribeToAppointmentCreated(BuildContext context, String role) {
     final SubscriptionOptions options = SubscriptionOptions(
       document: gql(APPOINTMENT_CREATED),
       variables: {
@@ -12,7 +13,7 @@ class NotificationService {
       },
     );
 
-    final Stream<QueryResult> stream = GraphqlClient.client.value.subscribe(options);
+    final Stream<QueryResult> stream = GraphqlClient.client(context).value.subscribe(options);
     return stream.map((result) {
       if (result.data == null) {
         throw Exception('No data received');
@@ -22,7 +23,7 @@ class NotificationService {
     });
   }
 
-  Stream<Map<String, dynamic>> subscribeToAppointmentUpdated(String role, String? id) {
+  Stream<Map<String, dynamic>> subscribeToAppointmentUpdated(BuildContext context, String role, String? id) {
     final SubscriptionOptions options = SubscriptionOptions(
       document: gql(APPOINTMENT_UPDATED),
       variables: {
@@ -31,7 +32,7 @@ class NotificationService {
       },
     );
 
-    final Stream<QueryResult> stream = GraphqlClient.client.value.subscribe(options);
+    final Stream<QueryResult> stream = GraphqlClient.client(context).value.subscribe(options);
     return stream.map((result) {
       if (result.data == null) {
         throw Exception('No data received');

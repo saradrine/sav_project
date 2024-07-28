@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sav_project/screens/auth/login.dart';
 
 class ConfirmationSuccess extends StatelessWidget {
   const ConfirmationSuccess({Key? key}) : super(key: key);
@@ -46,7 +47,14 @@ class ConfirmationSuccess extends StatelessWidget {
                 ),
                 SizedBox(height: 35),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Login(),
+                      ),
+                    );
+                  },
                   child: Text('Se connecter'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromARGB(255, 106, 202, 179),

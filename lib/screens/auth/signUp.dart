@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sav_project/screens/auth/login.dart';
 import 'package:sav_project/theme/colors.dart';
 import 'package:sav_project/widgets/field_input.dart' as FieldInput;
 import '../../widgets/auth/auth_button.dart';
@@ -115,7 +116,14 @@ class _SignUpState extends State<SignUp> {
                 AuthPrompt(
                   sentence: 'Vous avez déjà un compte?',
                   action: 'Se connecter',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Login(),
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(height: 50),
               ],
