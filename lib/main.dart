@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:sav_project/graphql/graphql_client.dart';
+import 'package:sav_project/providers/auth_provider.dart';
 import 'package:sav_project/providers/services_provider.dart';
 import 'package:sav_project/providers/user_provider.dart';
 import 'package:sav_project/screens/account_confirmation/account_confirmation.dart';
@@ -30,6 +31,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ServicesProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: MyApp(),
     ),
@@ -41,27 +43,44 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isLoggedIn = false;
-    context.read<UserProvider>().fetchUserById('24');
-    context.read<UserProvider>().createVehicle();
-    context.read<ServicesProvider>().fetchServices();
-    return GraphQLProvider(
-      client: GraphqlClient.client,
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          fontFamily: 'inter',
-          scaffoldBackgroundColor: isLoggedIn
-              ? AppColors.mainBackgroundColor
-              : AppColors.authBachkroundColor,
-          textSelectionTheme: TextSelectionThemeData(
-            cursorColor: const Color.fromARGB(255, 99, 99, 99),
-            selectionHandleColor: const Color.fromARGB(255, 99, 99, 99),
+    // context.read<UserProvider>().fetchUserById('2');
+    // context.read<UserProvider>().createVehicle();
+    context.read<ServicesProvider>().fetchServices(context);
+    return Consumer<AuthProvider>(
+      builder: (context, authProvider, child) {
+        bool isLoggedIn = authProvider.token != null;
+        // bool isLoggedIn = false;
+
+        print('context: $context');
+        if (isLoggedIn) {
+          // Print the token when logged in
+          print('User is logged in. Token: ${authProvider.token}');
+          print(authProvider.user?.id);
+        } else {
+          // Print a message when the user is not logged in
+          print('User is not logged in. Token: ${authProvider.token}');
+          print(authProvider.user?.id);
+        }
+
+        return GraphQLProvider(
+          client: GraphqlClient.client(context),
+          child: MaterialApp(
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              fontFamily: 'inter',
+              scaffoldBackgroundColor: isLoggedIn
+                  ? AppColors.mainBackgroundColor
+                  : AppColors.authBachkroundColor,
+              textSelectionTheme: TextSelectionThemeData(
+                cursorColor: const Color.fromARGB(255, 99, 99, 99),
+                selectionHandleColor: const Color.fromARGB(255, 99, 99, 99),
+              ),
+            ),
+            debugShowCheckedModeBanner: false,
+            home: isLoggedIn ? Layout() : Login(),
           ),
-        ),
-        debugShowCheckedModeBanner: false,
-        home: !isLoggedIn ? Layout() : ConfirmationFailure(),
-      ),
+        );
+      },
     );
   }
 }

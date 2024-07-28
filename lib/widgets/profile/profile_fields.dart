@@ -20,13 +20,13 @@ class ProfileFields extends StatelessWidget {
         children: [
           if (user != null) ...[
             Field(
-              content: user!.firstName ?? '',
+              content: user!.prenom ?? '',
               icon: 'assets/icons/user.png',
               width: 26,
             ),
             SizedBox(height: 13),
             Field(
-              content: user!.lastName ?? '',
+              content: user!.nom ?? '',
               icon: 'assets/icons/user.png',
               width: 26,
             ),
@@ -38,24 +38,24 @@ class ProfileFields extends StatelessWidget {
             ),
             SizedBox(height: 13),
             Field(
-              content: user!.phone ?? '',
+              content: user!.telephone ?? '',
               icon: 'assets/icons/mobile-phone.png',
             ),
             SizedBox(height: 13),
             Field(
-              content: user!.job ?? '',
+              content: user!.emploi ?? '',
               icon: 'assets/icons/suitcase.png',
               width: 23,
             ),
             SizedBox(height: 13),
             Field(
-              content: user!.address ?? '',
+              content: user!.adresse ?? '',
               icon: 'assets/icons/gps-navigation.png',
               width: 26,
             ),
             SizedBox(height: 13),
             Field(
-              content: formatDate(user!.birthDate),
+              content: formatDate(user!.dateNaissance),
               icon: 'assets/icons/cake.png',
               width: 23,
             ),

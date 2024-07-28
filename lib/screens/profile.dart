@@ -15,8 +15,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-
-
   bool _isEditing = false;
 
   void _openChangePasswordOverlay() {
@@ -43,14 +41,14 @@ class _ProfileState extends State<Profile> {
                     label: 'Prénom:',
                     icon: 'user.png',
                     widgetType: WidgetType.TextInputStyling,
-                    content: user!.firstName ?? '',
+                    content: user!.prenom ?? '',
                     width: 26,
                   ),
                   ProfileFieldDetail(
                     label: 'Nom:',
                     icon: 'user.png',
                     widgetType: WidgetType.TextInputStyling,
-                    content: user.lastName,
+                    content: user.nom,
                     width: 26,
                   ),
                   ProfileFieldDetail(
@@ -64,27 +62,27 @@ class _ProfileState extends State<Profile> {
                     label: 'Téléphone:',
                     icon: 'mobile-phone.png',
                     widgetType: WidgetType.PhoneInputStyling,
-                    content: user.phone,
+                    content: user.telephone,
                   ),
                   ProfileFieldDetail(
                     label: 'Emploi:',
                     icon: 'suitcase.png',
                     widgetType: WidgetType.TextInputStyling,
-                    content: user.job,
+                    content: user.emploi ?? '',
                     width: 23,
                   ),
                   ProfileFieldDetail(
                     label: 'Adresse:',
                     icon: 'gps-navigation.png',
                     widgetType: WidgetType.TextInputStyling,
-                    content: user.address,
+                    content: user.adresse ?? '',
                     width: 26,
                   ),
                   ProfileFieldDetail(
                     label: 'Date de naissance:',
                     icon: 'cake.png',
                     widgetType: WidgetType.DateInputStyling,
-                    content: formatDate(user.birthDate).toString(),
+                    content: formatDate(user.dateNaissance).toString(),
                     width: 23,
                     inProfile: true,
                   ),
