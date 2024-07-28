@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sav_project/screens/auth/login.dart';
 import 'package:sav_project/theme/colors.dart';
 
-
 class AuthTextField extends StatelessWidget {
+  final TextEditingController? controller;
   final String label;
   final String hintText;
   final String iconPath;
@@ -15,6 +15,7 @@ class AuthTextField extends StatelessWidget {
   final int? maxLength;
 
   const AuthTextField({
+    this.controller,
     required this.label,
     required this.hintText,
     required this.iconPath,
@@ -52,6 +53,7 @@ class AuthTextField extends StatelessWidget {
               color: Colors.white,
             ),
             child: TextFormField(
+              controller: controller,
               obscureText: obscureText,
               enableSuggestions: !obscureText,
               autocorrect: !obscureText,

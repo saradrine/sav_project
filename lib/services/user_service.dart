@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:sav_project/graphql/queries/user_queries.dart';
 import 'package:sav_project/models/user.dart';
 import 'package:sav_project/graphql/graphql_client.dart';
 
 class UserService {
-  Future<User> fetchUserById(String id) async {
+  Future<User> fetchUserById(BuildContext context, String id) async {
     final QueryOptions options = QueryOptions(
       document: gql(getClientById),
       variables: {
@@ -12,7 +13,8 @@ class UserService {
       },
     );
 
-    final QueryResult result = await GraphqlClient.client.value.query(options);
+    final QueryResult result =
+        await GraphqlClient.client(context).value.query(options);
 
     if (result.hasException) {
       print('Error: ${result.exception.toString()}');
