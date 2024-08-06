@@ -66,7 +66,7 @@ class AuthService {
     }
   }
 
-  Future<Map<String, dynamic>> registerSuperAdmin(
+  Future<Map<String, dynamic>> registerClient(
     BuildContext context, {
     required String nom,
     required String prenom,
@@ -80,7 +80,7 @@ class AuthService {
     required String emploi,
   }) async {
     final MutationOptions options = MutationOptions(
-      document: gql(registerSuperAdminMutation),
+      document: gql(registerClientMutation),
       variables: {
         'nom': nom,
         'prenom': prenom,
@@ -98,11 +98,13 @@ class AuthService {
     final QueryResult result =
         await GraphqlClient.client(context).value.mutate(options);
 
-    if (result.hasException) {
-      print('Error: ${result.exception.toString()}');
-      throw Exception(result.exception.toString());
+  if (result.hasException) {
+      final errorMessage = result.exception!.graphqlErrors.isNotEmpty
+          ? result.exception!.graphqlErrors.first.message
+          : 'Erreur inattendue';
+      throw Exception(errorMessage);
     }
 
-    return result.data!['registerSuperAdmin'];
+    return result.data!['registerClient'];
   }
 }
