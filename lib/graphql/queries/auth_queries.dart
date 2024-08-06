@@ -21,9 +21,9 @@ mutation logout {
 }
 ''';
 
-const String registerSuperAdminMutation = r'''
-mutation registerSuperAdmin($nom: String!, $prenom: String!, $email: String!, $password: String!, $cin: Int!, $telephone: String!, $adresse: String!, $sexe: Sexe!, $dateNaissance: DateTime!, $emploi: String!) {
-  registerSuperAdmin(userData: {
+const String registerClientMutation = r'''
+mutation registerClient($nom: String!, $prenom: String!, $email: String!, $password: String!, $cin: Int!, $telephone: String!, $adresse: String!, $sexe: Sexe!, $dateNaissance: DateTime!, $emploi: String!) {
+  registerClient(userData: {
     nom: $nom,
     prenom: $prenom,
     email: $email,
