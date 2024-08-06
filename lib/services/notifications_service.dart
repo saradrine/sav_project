@@ -42,12 +42,12 @@ class NotificationService {
     });
   }
 
-  Future<List<Map<String, dynamic>>> getAllNotifications() async {
+  Future<List<Map<String, dynamic>>> getAllNotifications(BuildContext context) async {
     final QueryOptions options = QueryOptions(
       document: gql(GET_NOTIFICATIONS),
     );
 
-    final QueryResult result = await GraphqlClient.client.value.query(options);
+    final QueryResult result = await GraphqlClient.client(context).value.query(options);
 
     if (result.hasException) {
       print('Error: ${result.exception.toString()}');
@@ -60,7 +60,7 @@ class NotificationService {
 
     return notifications;
   }
-    Future<void> deleteNotification(String id) async {
+    Future<void> deleteNotification(BuildContext context, String id) async {
     final MutationOptions options = MutationOptions(
       document: gql(DELETE_NOTIFICATION),
       variables: {
@@ -68,7 +68,7 @@ class NotificationService {
       },
     );
 
-    final QueryResult result = await GraphqlClient.client.value.mutate(options);
+    final QueryResult result = await GraphqlClient.client(context).value.mutate(options);
 
     if (result.hasException) {
       print('Error: ${result.exception.toString()}');
@@ -79,7 +79,7 @@ class NotificationService {
     print('Deleted notification with id: ${deletedNotification['id']}');
   }
 
-  Future<void> markAsRead(String id) async {
+  Future<void> markAsRead(BuildContext context, String id) async {
     final MutationOptions options = MutationOptions(
       document: gql(MARK_AS_READ),
       variables: {
@@ -87,7 +87,7 @@ class NotificationService {
       },
     );
 
-    final QueryResult result = await GraphqlClient.client.value.mutate(options);
+    final QueryResult result = await GraphqlClient.client(context).value.mutate(options);
 
     if (result.hasException) {
       print('Error: ${result.exception.toString()}');
@@ -98,7 +98,7 @@ class NotificationService {
     print('Marked notification as read with id: ${markedNotification['id']}');
   }
   
-  Future<void> markAsSeen(String id) async {
+  Future<void> markAsSeen(BuildContext context, String id) async {
     final MutationOptions options = MutationOptions(
       document: gql(MARK_AS_SEEN),
       variables: {
@@ -106,7 +106,7 @@ class NotificationService {
       },
     );
 
-    final QueryResult result = await GraphqlClient.client.value.mutate(options);
+    final QueryResult result = await GraphqlClient.client(context).value.mutate(options);
 
     if (result.hasException) {
       print('Error: ${result.exception.toString()}');

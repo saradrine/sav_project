@@ -90,7 +90,7 @@ class _LayoutState extends State<Layout> {
 
   void _onNotifPage() {
     final notificationProvider = Provider.of<NotificationProvider>(context, listen: false);
-    notificationProvider.markAllAsRead();
+    notificationProvider.markAllAsRead(context);
     _tappedSpecialPage(6);
   }
 

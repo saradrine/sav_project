@@ -53,9 +53,9 @@ List<dynamic> getAncienNotifications(List<dynamic> notifications) {
 }
 
 
-  void onDismissed(String id) async {
+  void onDismissed(BuildContext context, String id) async {
     try {
-      await NotificationService().deleteNotification(id);
+      await NotificationService().deleteNotification(context,id);
       setState(() {
         final notifications = context.read<NotificationProvider>().notifications;
         notifications.removeWhere((notification) => notification['id'] == id);      });

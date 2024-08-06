@@ -8,10 +8,10 @@ class NotificationProvider with ChangeNotifier {
   bool _hasNewNotification = false;
   bool get hasNewNotification => _hasNewNotification;
 
-  Future<void> fetchAllNotifications() async {
+  Future<void> fetchAllNotifications(BuildContext context) async {
     try {
       final allNotifications =
-          await NotificationService().getAllNotifications();
+          await NotificationService().getAllNotifications(context);
       _notifications = allNotifications;
       _checkForNewNotifications();
       notifyListeners();
@@ -20,11 +20,11 @@ class NotificationProvider with ChangeNotifier {
     }
   }
 
-  void subscribeToNotifications() {
+  void subscribeToNotifications(BuildContext context, String id) {
     if (_isSubscribed) return;
 
     NotificationService()
-        .subscribeToAppointmentCreated('admin')
+        .subscribeToAppointmentCreated(context,'admin')
         .listen((notification) {
       _notifications.add(notification);
       _hasNewNotification = true;
@@ -32,7 +32,7 @@ class NotificationProvider with ChangeNotifier {
     });
 
     NotificationService()
-        .subscribeToAppointmentUpdated('admin', null)
+        .subscribeToAppointmentUpdated(context,'admin', id)
         .listen((notification) {
       _notifications.add(notification);
       print('Subscribed to notifications: $notifications');
@@ -42,11 +42,11 @@ class NotificationProvider with ChangeNotifier {
     _isSubscribed = true;
   }
 
-  Future<void> markAllAsRead() async {
+  Future<void> markAllAsRead(BuildContext context) async {
     for (var notification in _notifications) {
       if (notification['isRead'] == false) {
         try {
-          await NotificationService().markAsRead(notification['id']);
+          await NotificationService().markAsRead(context,notification['id']);
           notification['isRead'] = true;
         } catch (e) {
           print('Error marking notification as read: $e');

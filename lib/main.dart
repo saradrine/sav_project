@@ -32,7 +32,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ServicesProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => NotificationProvider())
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: MyApp(),
@@ -45,19 +45,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // context.read<UserProvider>().fetchUserById('24');
-    context.read<NotificationProvider>().fetchAllNotifications();
-    context.read<NotificationProvider>().subscribeToNotifications();
-    context.read<ServicesProvider>().fetchServices(context);
     return Consumer<AuthProvider>(
       builder: (context, authProvider, child) {
         bool isLoggedIn = authProvider.token != null;
-
-        print('context: $context');
-        if (isLoggedIn) {
+        final userId = isLoggedIn ? authProvider.user?.id : null;
+        print("is logged in: $isLoggedIn");
+        print("userId: $userId");
+        // print('context: $context');
+        if (isLoggedIn  && userId != null ) {
           // Print the token when logged in
           print('User is logged in. Token: ${authProvider.token}');
-          print(authProvider.user?.id);
+          context.read<UserProvider>().fetchUserById(context, userId);
+          context.read<NotificationProvider>().fetchAllNotifications(context);
+          context.read<NotificationProvider>().subscribeToNotifications(context, userId);
+          context.read<ServicesProvider>().fetchServices(context);
         } else {
           // Print a message when the user is not logged in
           print('User is not logged in. Token: ${authProvider.token}');
