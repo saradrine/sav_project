@@ -105,20 +105,20 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> register(
-    BuildContext context, {
-    required String nom,
-    required String prenom,
-    required String email,
-    required String password,
-    required int cin,
-    required String telephone,
-    required String adresse,
-    required Sexe sexe,
-    required DateTime dateNaissance,
-    required String emploi,
-  }) async {
+    BuildContext context,
+    String nom,
+    String prenom,
+    String email,
+    String password,
+    int cin,
+    String telephone,
+    String adresse,
+    Sexe sexe,
+    DateTime dateNaissance,
+    String emploi,
+  ) async {
     try {
-      final authData = await AuthService().registerSuperAdmin(
+      final authData = await AuthService().registerClient(
         context,
         nom: nom,
         prenom: prenom,
@@ -134,6 +134,25 @@ class AuthProvider extends ChangeNotifier {
       _token = authData['token'];
       notifyListeners();
     } catch (e) {
+      if (e is Exception) {
+        if (e
+            .toString()
+            .contains('Email, mot de passe et cin sont obligatoires'))
+          _errorMessage = 'Email, mot de passe et cin sont obligatoires';
+        else if (e.toString().contains('Email ou cin déjà existant'))
+          _errorMessage = 'Email ou cin déjà existant';
+        else {
+          _errorMessage = 'Une erreur est survenue';
+        }
+      } else {
+        _errorMessage = 'Une erreur est survenue';
+      }
+      notifyListeners();
+      // Set a timer to clear the error message after 5 seconds
+      Timer(Duration(seconds: 5), () {
+        _errorMessage = null;
+        notifyListeners();
+      });
       print('Error registering: $e');
     }
   }
