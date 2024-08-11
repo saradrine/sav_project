@@ -3,6 +3,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:sav_project/enum/sexe.dart';
 import 'package:sav_project/graphql/queries/auth_queries.dart';
 import 'package:sav_project/graphql/graphql_client.dart';
+import 'package:sav_project/models/user.dart';
 
 class AuthService {
   Future<Map<String, dynamic>> login(
@@ -66,7 +67,7 @@ class AuthService {
     }
   }
 
-  Future<Map<String, dynamic>> registerClient(
+  Future<User> registerClient(
     BuildContext context, {
     required String nom,
     required String prenom,
@@ -98,13 +99,115 @@ class AuthService {
     final QueryResult result =
         await GraphqlClient.client(context).value.mutate(options);
 
-  if (result.hasException) {
+    if (result.hasException) {
       final errorMessage = result.exception!.graphqlErrors.isNotEmpty
           ? result.exception!.graphqlErrors.first.message
           : 'Erreur inattendue';
       throw Exception(errorMessage);
     }
 
-    return result.data!['registerClient'];
+    return User.fromJson(result.data!['registerClient']);
+  }
+
+  Future<bool> resetVerificationToken(
+    BuildContext context, {
+    required String email,
+  }) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(resendVerificationEmailMutation),
+      variables: {
+        'email': email,
+      },
+    );
+
+    final QueryResult result =
+        await GraphqlClient.client(context).value.mutate(options);
+
+    if (result.hasException) {
+      final errorMessage = result.exception!.graphqlErrors.isNotEmpty
+          ? result.exception!.graphqlErrors.first.message
+          : 'Erreur inattendue';
+      throw Exception(errorMessage);
+    }
+
+    return true;
+  }
+
+  Future<bool> verifyEmail(
+    BuildContext context, {
+    required String token,
+    required String email,
+  }) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(verifyAccountMutation),
+      variables: {
+        'token': token,
+        'email': email,
+      },
+    );
+
+    final QueryResult result =
+        await GraphqlClient.client(context).value.mutate(options);
+
+    if (result.hasException) {
+      final errorMessage = result.exception!.graphqlErrors.isNotEmpty
+          ? result.exception!.graphqlErrors.first.message
+          : 'Erreur inattendue';
+      throw Exception(errorMessage);
+    }
+
+    final isVerified = result.data?['verifyEmail'] == true;
+    return isVerified;
+  }
+
+  Future<void> forgotPassword(
+    BuildContext context, {
+    required String email,
+  }) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(forgotPasswordMutation),
+      variables: {
+        'email': email,
+      },
+    );
+
+    final QueryResult result =
+        await GraphqlClient.client(context).value.mutate(options);
+
+    if (result.hasException) {
+      final errorMessage = result.exception!.graphqlErrors.isNotEmpty
+          ? result.exception!.graphqlErrors.first.message
+          : 'Erreur inattendue';
+      throw Exception(errorMessage);
+    }
+  }
+
+  Future<bool> resetPassword(
+    BuildContext context, {
+    required String token,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(resetPasswordMutation),
+      variables: {
+        'token': token,
+        'password': password,
+        'confirmPassword': confirmPassword,
+      },
+    );
+
+    final QueryResult result =
+        await GraphqlClient.client(context).value.mutate(options);
+
+    if (result.hasException) {
+      final errorMessage = result.exception!.graphqlErrors.isNotEmpty
+          ? result.exception!.graphqlErrors.first.message
+          : 'Erreur inattendue';
+      throw Exception(errorMessage);
+    }
+
+    final isReset = result.data?['resetPassword'] == true;
+    return isReset;
   }
 }

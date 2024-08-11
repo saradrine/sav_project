@@ -27,7 +27,10 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController emploiController = TextEditingController();
   final TextEditingController adresseController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final ScrollController _scrollController = ScrollController();
 
   Sexe _selectedGender = Sexe.MASCULIN;
   DateTime _selectedDateOfBirth = DateTime.now();
@@ -48,6 +51,7 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,6 +87,13 @@ class _SignUpState extends State<SignUp> {
                 ),
                 Consumer<AuthProvider>(builder: (context, authProvider, child) {
                   if (authProvider.errorMessage != null) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      _scrollController.animateTo(
+                        0.0,
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                      );
+                    });
                     return Column(
                       children: [
                         SizedBox(
@@ -159,13 +170,13 @@ class _SignUpState extends State<SignUp> {
                               nom,
                               prenom,
                               email,
-                              telephone,
+                              password,
                               cinInt,
-                              emploi,
+                              telephone,
                               adresse,
                               _selectedGender,
                               _selectedDateOfBirth,
-                              password);
+                              emploi);
                     } else {
                       print("Form is invalid! Cannot proceed with submission.");
                     }
@@ -310,6 +321,7 @@ class _SignUpState extends State<SignUp> {
       );
 
   Widget _buildConfirmPasswordField(BuildContext context) => AuthTextField(
+        controller: confirmPasswordController,
         label: "Confirmez le mot de passe",
         hintText: "confirmez votre mot de passe",
         iconPath: 'assets/icons/padlock.png',
@@ -327,6 +339,14 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
         ),
-        validatorMessage: 'Confirmation du mot de passe obligatoire',
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Confirmation du mot de passe obligatoire';
+          }
+          if (value != passwordController.text) {
+            return 'Les mots de passe ne correspondent pas';
+          }
+          return null;
+        },
       );
 }

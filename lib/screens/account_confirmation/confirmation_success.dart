@@ -1,3 +1,5 @@
+import 'package:android_intent/android_intent.dart';
+import 'package:android_intent/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sav_project/screens/auth/login.dart';
@@ -47,13 +49,22 @@ class ConfirmationSuccess extends StatelessWidget {
                 ),
                 SizedBox(height: 35),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Login(),
-                      ),
+                  onPressed: () async {
+                    final intent = AndroidIntent(
+                      action: 'android.intent.action.MAIN',
+                      package: 'com.example.sav_project',
+                      componentName: 'com.example.sav_project.MainActivity',
+                      flags: <int>[
+                        Flag.FLAG_ACTIVITY_NEW_TASK,
+                        Flag.FLAG_ACTIVITY_CLEAR_TASK
+                      ],
                     );
+                    try {
+                      await intent.launch();
+                      Navigator.of(context).pop();
+                    } catch (e) {
+                      print('Error launching intent: $e');
+                    }
                   },
                   child: Text('Se connecter'),
                   style: ElevatedButton.styleFrom(
