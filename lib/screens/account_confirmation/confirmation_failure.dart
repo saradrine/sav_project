@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:sav_project/providers/auth_provider.dart';
 
 class ConfirmationFailure extends StatelessWidget {
   const ConfirmationFailure({Key? key}) : super(key: key);
@@ -28,7 +30,25 @@ class ConfirmationFailure extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 35),
+                Consumer<AuthProvider>(builder: (context, authProvider, child) {
+                  if (authProvider.errorMessage != null) {
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          authProvider.errorMessage!,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    );
+                  }
+                  return SizedBox(height: 35);
+                }),
                 Image(
                     image: AssetImage(
                         'assets/icons/close-cross-in-circular-outlined-interface-button.png'),

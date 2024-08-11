@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sav_project/providers/auth_provider.dart';
 import 'package:sav_project/screens/auth/signUp.dart';
-import 'package:sav_project/screens/layout.dart';
 import 'package:sav_project/theme/colors.dart';
 import '../../widgets/auth/auth_button.dart';
 import '../../widgets/auth/auth_prompt.dart';
 import '../../widgets/auth/auth_text_field.dart';
 import '../../widgets/auth/header_auth.dart';
 import '../../widgets/auth/welcome_text.dart';
+import 'reset_password.dart';
 // Constants
 
 //Button
@@ -171,7 +171,12 @@ class _LoginState extends State<Login> {
         alignment: Alignment.centerRight,
         child: TextButton(
           onPressed: () {
-            // Handle forgotten password
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ResetPassword(),
+              ),
+            );
           },
           child: Text(
             'Mot de passe oublié?',
