@@ -1,21 +1,16 @@
-import 'package:android_intent/android_intent.dart';
-import 'package:android_intent/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:sav_project/graphql/graphql_client.dart';
-import 'package:sav_project/graphql/queries/auth_queries.dart';
 import 'package:sav_project/providers/auth_provider.dart';
 import 'package:sav_project/providers/services_provider.dart';
 import 'package:sav_project/providers/user_provider.dart';
-import 'package:sav_project/screens/account_confirmation/account_confirmation.dart';
 import 'package:sav_project/screens/account_confirmation/confirmation_failure.dart';
 import 'package:sav_project/screens/account_confirmation/confirmation_success.dart';
 import 'package:sav_project/screens/auth/reset_password_form.dart';
 import 'package:sav_project/screens/layout.dart';
 import 'package:sav_project/screens/auth/login.dart';
-import 'package:sav_project/screens/auth/signUp.dart';
 import 'package:sav_project/theme/colors.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:uni_links/uni_links.dart';
@@ -52,6 +47,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   StreamSubscription<String?>? _sub;
   String? initialLink;
 
@@ -87,36 +83,10 @@ class _MyAppState extends State<MyApp> {
       final token = uri.queryParameters['token'];
       final email = uri.queryParameters['email'];
       if (token != null && email != null) {
-        Navigator.push(
-          context,
+        navigatorKey.currentState?.push(
           MaterialPageRoute(
             builder: (context) =>
                 EmailVerificationScreen(token: token, email: email),
-          ),
-        );
-      }
-    } else if (uri.path == '/reset-password') {
-      final token = uri.queryParameters['token'];
-      if (token != null) {
-        final intent = AndroidIntent(
-          action: 'android.intent.action.MAIN',
-          package: 'com.example.sav_project',
-          componentName: 'com.example.sav_project.MainActivity',
-          flags: <int>[
-            Flag.FLAG_ACTIVITY_NEW_TASK,
-            Flag.FLAG_ACTIVITY_CLEAR_TASK
-          ],
-        );
-        try {
-          await intent.launch();
-          Navigator.of(context).pop();
-        } catch (e) {
-          print('Error launching intent: $e');
-        }
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ResetPasswordForm(token: token),
           ),
         );
       }
@@ -175,7 +145,7 @@ class _MyAppState extends State<MyApp> {
         } else {
           mainWidget = isLoggedIn ? Layout() : Login();
         }
-        
+
         return GraphQLProvider(
           client: GraphqlClient.client(context),
           child: MaterialApp(
@@ -191,7 +161,9 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
             debugShowCheckedModeBanner: false,
-            home: mainWidget,
+            home: Builder(builder: (context) {
+              return mainWidget;
+            }),
           ),
         );
       },

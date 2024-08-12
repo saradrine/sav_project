@@ -1,9 +1,12 @@
+import 'package:android_intent/android_intent.dart';
+import 'package:android_intent/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sav_project/providers/auth_provider.dart';
 import 'package:sav_project/screens/auth/login.dart';
 import 'package:sav_project/theme/colors.dart';
 import 'package:sav_project/widgets/auth/auth_button.dart';
+import 'package:sav_project/widgets/auth/auth_prompt.dart';
 import 'package:sav_project/widgets/auth/auth_text_field.dart';
 import 'package:sav_project/widgets/auth/header_auth.dart';
 
@@ -89,7 +92,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               ),
               SizedBox(height: 5),
               Text(
-                'Entrez votre adresse mail pour réinitialiser le mot de passe',
+                'Réinitialiser le mot de passe',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -123,9 +126,11 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                       return SizedBox(height: 40);
                     }),
                     _buildPasswordField(context),
+                    SizedBox(height: 20),
+                    _buildConfirmPasswordField(context),
                     SizedBox(height: 40),
                     AuthButton(
-                      text: 'Envoyer un mail',
+                      text: 'Confirmer',
                       onPressed: () async {
                         final password = passwordController.text;
                         final confirmPassword = confirmPasswordController.text;
@@ -141,6 +146,27 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                         } else {
                           print(
                               "Form is invalid! Cannot proceed with submission.");
+                        }
+                      },
+                    ),
+                    AuthPrompt(
+                      sentence: '',
+                      action: 'Se connecter',
+                      onPressed: () async {
+                        final intent = AndroidIntent(
+                          action: 'android.intent.action.MAIN',
+                          package: 'com.example.sav_project',
+                          componentName: 'com.example.sav_project.MainActivity',
+                          flags: <int>[
+                            Flag.FLAG_ACTIVITY_NEW_TASK,
+                            Flag.FLAG_ACTIVITY_CLEAR_TASK
+                          ],
+                        );
+                        try {
+                          await intent.launch();
+                          Navigator.of(context).pop();
+                        } catch (e) {
+                          print('Error launching intent: $e');
                         }
                       },
                     ),
