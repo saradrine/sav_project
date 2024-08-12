@@ -115,6 +115,13 @@ class _ResetPasswordState extends State<ResetPassword> {
                           await Provider.of<AuthProvider>(context,
                                   listen: false)
                               .forgotPassword(context, email);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  'Veuillez vérifier votre boîte mail pour réinitialiser votre mot de passe.'),
+                              duration: Duration(seconds: 3),
+                            ),
+                          );
                         } else {
                           print(
                               "Form is invalid! Cannot proceed with submission.");
@@ -153,4 +160,3 @@ class _ResetPasswordState extends State<ResetPassword> {
         },
       );
 }
-

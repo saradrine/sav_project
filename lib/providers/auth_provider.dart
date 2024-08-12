@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-// import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:sav_project/enum/sexe.dart';
 import 'package:sav_project/models/user.dart';
 import 'package:sav_project/screens/account_confirmation/account_confirmation.dart';
 import 'package:sav_project/screens/auth/login.dart';
-import 'package:sav_project/screens/home.dart';
 import 'package:sav_project/screens/layout.dart';
 import 'package:sav_project/services/auth_service.dart';
 import 'dart:async';
@@ -198,7 +196,6 @@ class AuthProvider extends ChangeNotifier {
     try {
       bool result =
           await AuthService().verifyEmail(context, token: token, email: email);
-      print("el erreur, $result");
       notifyListeners();
       return result;
     } catch (e) {
