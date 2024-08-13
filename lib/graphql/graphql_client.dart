@@ -6,10 +6,10 @@ import 'package:sav_project/providers/auth_provider.dart';
 
 class GraphqlClient {
   static final HttpLink httpLink = HttpLink(
-    'http://192.168.56.1:3000/graphql',
+    dotenv.env['API_URL'] ?? 'http://192.168.1.5:3000/graphql',
   );
   static final WebSocketLink webSocketLink =
-      WebSocketLink(dotenv.env['WS_URL'] ?? 'ws://localhost:3000/graphql');
+      WebSocketLink( dotenv.env['WS_URL'] ?? 'ws://192.168.1.9:3000/graphql' );
 
   static AuthLink authLink(BuildContext context) => AuthLink(
         getToken: () async {

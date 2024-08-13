@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sav_project/theme/colors.dart';
 import 'dart:async';
-import '../../models/notif.dart';
 
 class NotificationDetail extends StatefulWidget {
-  final Notif notification;
+  final notification;
 
   const NotificationDetail({
     Key? key,
@@ -35,12 +34,17 @@ class _NotificationDetailState extends State<NotificationDetail> {
     super.dispose();
   }
 
-  String formatNotificationDate(DateTime date) {
+  String formatNotificationDate(String dateString) {
+    final date = DateTime.parse(dateString);
     final now = DateTime.now();
     final difference = now.difference(date);
 
     if (difference.inMinutes < 60) {
-      return 'il y a ${difference.inMinutes}m';
+      if(difference.inMinutes == 0){
+        return 'à l\'instant';
+      } else {
+        return 'il y a ${difference.inMinutes}m';
+      }
     } else if (difference.inHours < 3) {
       return 'il y a ${difference.inHours}h';
     } else {
@@ -50,13 +54,14 @@ class _NotificationDetailState extends State<NotificationDetail> {
 
   @override
   Widget build(BuildContext context) {
+    bool isSeen = widget.notification['isSeen'] ?? false;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.notification.text,
+            widget.notification['content'],
             style: TextStyle(fontSize: 15),
           ),
           SizedBox(height: 8),
@@ -64,13 +69,13 @@ class _NotificationDetailState extends State<NotificationDetail> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                formatNotificationDate(widget.notification.date),
+                formatNotificationDate(widget.notification['createdAt']),
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 12,
                 ),
               ),
-              if (widget.notification.isUnRead)
+              if (!isSeen)
                 Icon(
                   Icons.circle,
                   color: AppColors.kPrimaryColor,

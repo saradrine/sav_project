@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sav_project/providers/notifications_provider.dart';
 import 'package:sav_project/screens/add_vehicule.dart';
 import 'package:sav_project/screens/appointment.dart';
 import 'package:sav_project/screens/home.dart';
@@ -87,6 +89,8 @@ class _LayoutState extends State<Layout> {
   }
 
   void _onNotifPage() {
+    final notificationProvider = Provider.of<NotificationProvider>(context, listen: false);
+    notificationProvider.markAllAsRead(context);
     _tappedSpecialPage(6);
   }
 
@@ -112,6 +116,9 @@ class _LayoutState extends State<Layout> {
 
   @override
   Widget build(BuildContext context) {
+    final hasNewNotification =
+        context.watch<NotificationProvider>().hasNewNotification;
+
     return Scaffold(
       key: _scaffoldKey,
       drawer: SideMenu(
@@ -181,13 +188,30 @@ class _LayoutState extends State<Layout> {
                   actions: [
                     Padding(
                       padding: const EdgeInsets.only(right: 8),
-                      child: IconButton(
-                        icon: ImageIcon(
-                          AssetImage('assets/icons/bellOutlined.png'),
-                          size: 28,
-                        ),
-                        color: Colors.black,
-                        onPressed: _onNotifPage,
+                      child: Stack(
+                        children: [
+                          IconButton(
+                            icon: ImageIcon(
+                              AssetImage('assets/icons/bellOutlined.png'),
+                              size: 28,
+                            ),
+                            color: Colors.black,
+                            onPressed: _onNotifPage,
+                          ),
+                          if (hasNewNotification)
+                            Positioned(
+                              right: 9,
+                              top: 9,
+                              child: Container(
+                                width: 12,
+                                height: 12,
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
                     ),
                   ],

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:sav_project/graphql/graphql_client.dart';
+import 'package:sav_project/providers/notifications_provider.dart';
 import 'package:sav_project/providers/auth_provider.dart';
 import 'package:sav_project/providers/services_provider.dart';
 import 'package:sav_project/providers/user_provider.dart';
@@ -32,6 +33,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ServicesProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: MyApp(),
@@ -101,19 +103,20 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // context.read<UserProvider>().fetchUserById('2');
-    // context.read<UserProvider>().createVehicle();
-    context.read<ServicesProvider>().fetchServices(context);
     return Consumer<AuthProvider>(
       builder: (context, authProvider, child) {
         bool isLoggedIn = authProvider.token != null;
-        // bool isLoggedIn = false;
-
-        print('context: $context');
-        if (isLoggedIn) {
+        final userId = isLoggedIn ? authProvider.user?.id : null;
+        print("is logged in: $isLoggedIn");
+        print("userId: $userId");
+        // print('context: $context');
+        if (isLoggedIn  && userId != null ) {
           // Print the token when logged in
           print('User is logged in. Token: ${authProvider.token}');
-          print(authProvider.user?.id);
+          context.read<UserProvider>().fetchUserById(context, userId);
+          context.read<NotificationProvider>().fetchAllNotifications(context);
+          context.read<NotificationProvider>().subscribeToNotifications(context, userId);
+          context.read<ServicesProvider>().fetchServices(context);
         } else {
           // Print a message when the user is not logged in
           print('User is not logged in. Token: ${authProvider.token}');
