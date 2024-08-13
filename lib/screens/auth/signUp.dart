@@ -166,6 +166,12 @@ class _SignUpState extends State<SignUp> {
                               _selectedGender,
                               _selectedDateOfBirth,
                               password);
+                              Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Login(),
+                      ),
+                    );
                     } else {
                       print("Form is invalid! Cannot proceed with submission.");
                     }
