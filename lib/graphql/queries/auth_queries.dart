@@ -44,3 +44,27 @@ mutation registerClient($nom: String!, $prenom: String!, $email: String!, $passw
   }
 }
 ''';
+
+const String resendVerificationEmailMutation = r'''
+mutation resetVerificationToken($email: String!) {
+  resetVerificationToken(email: $email)
+}
+''';
+
+const String verifyAccountMutation = r'''
+mutation verifyEmail($token: String!, $email: String!) {
+  verifyEmail(token: $token, email: $email) 
+}
+''';
+
+const String forgotPasswordMutation = r'''
+mutation forgotPassword($email: String!) {
+  forgotPassword(email: $email)
+}
+''';
+
+const String resetPasswordMutation = r'''
+mutation resetPassword($token: String!, $password: String!, $confirmPassword: String!) {
+  resetPassword(token: $token, password: $password, confirmPassword: $confirmPassword)
+}
+''';

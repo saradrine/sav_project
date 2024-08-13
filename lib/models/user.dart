@@ -16,6 +16,7 @@ class User {
   final String? emploi;
   final List<Vehicule> vehicules;
   final List<Historiquerdv> appointments;
+  final bool isVerified = false;
 
   User({
     required this.id,

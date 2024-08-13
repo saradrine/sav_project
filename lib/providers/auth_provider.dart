@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-// import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:sav_project/enum/sexe.dart';
 import 'package:sav_project/models/user.dart';
+import 'package:sav_project/screens/account_confirmation/account_confirmation.dart';
 import 'package:sav_project/screens/auth/login.dart';
-import 'package:sav_project/screens/home.dart';
 import 'package:sav_project/screens/layout.dart';
 import 'package:sav_project/services/auth_service.dart';
 import 'dart:async';
@@ -131,7 +130,14 @@ class AuthProvider extends ChangeNotifier {
         dateNaissance: dateNaissance,
         emploi: emploi,
       );
-      _token = authData['token'];
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return AccountConfirmation(email: email);
+          },
+        ),
+      );
       notifyListeners();
     } catch (e) {
       if (e is Exception) {
@@ -154,6 +160,118 @@ class AuthProvider extends ChangeNotifier {
         notifyListeners();
       });
       print('Error registering: $e');
+    }
+  }
+
+  Future<void> resendVerificationEmail(
+      BuildContext context, String email) async {
+    try {
+      await AuthService().resetVerificationToken(context, email: email);
+      _errorMessage = null;
+      notifyListeners();
+    } catch (e) {
+      if (e is Exception) {
+        if (e.toString().contains('Utilisateur non trouvé'))
+          _errorMessage = 'Utilisateur non trouvé';
+        else if (e.toString().contains('Compte déjà verifé'))
+          _errorMessage = 'Compte déjà verifé';
+        else {
+          _errorMessage = 'Une erreur est survenue';
+        }
+      } else {
+        _errorMessage = 'Une erreur est survenue';
+      }
+      notifyListeners();
+      // Set a timer to clear the error message after 5 seconds
+      Timer(Duration(seconds: 5), () {
+        _errorMessage = null;
+        notifyListeners();
+      });
+      print('Error resending verification email: $e');
+    }
+  }
+
+  Future<bool> verifyEmail(
+      BuildContext context, String token, String email) async {
+    try {
+      bool result =
+          await AuthService().verifyEmail(context, token: token, email: email);
+      notifyListeners();
+      return result;
+    } catch (e) {
+      // Handle the error appropriately
+      if (e.toString().contains('Utilisateur non trouvé')) {
+        _errorMessage = 'Utilisateur non trouvé';
+      } else if (e.toString().contains('Le token de vérification a expiré')) {
+        _errorMessage = 'Le token de vérification a expiré';
+      } else if (e.toString().contains('Compte déjà verifé')) {
+        _errorMessage = 'Compte déjà verifé';
+      } else {
+        _errorMessage = 'Une erreur est survenue';
+      }
+      notifyListeners();
+      Timer(Duration(seconds: 10), () {
+        _errorMessage = null;
+        notifyListeners();
+      });
+      return false;
+    }
+  }
+
+  Future<void> forgotPassword(BuildContext context, String email) async {
+    try {
+      await AuthService().forgotPassword(context, email: email);
+      _errorMessage = null;
+      notifyListeners();
+    } catch (e) {
+      if (e is Exception) {
+        if (e.toString().contains('Utilisateur non trouvé'))
+          _errorMessage = 'Utilisateur non trouvé';
+        else {
+          _errorMessage = 'Une erreur est survenue';
+        }
+      } else {
+        _errorMessage = 'Une erreur est survenue';
+      }
+      notifyListeners();
+      // Set a timer to clear the error message after 5 seconds
+      Timer(Duration(seconds: 5), () {
+        _errorMessage = null;
+        notifyListeners();
+      });
+    }
+  }
+
+  Future<bool> resetPassword(BuildContext context, String token,
+      String password, String confirmPassword) async {
+    try {
+      bool result = await AuthService().resetPassword(context,
+          token: token, password: password, confirmPassword: confirmPassword);
+      notifyListeners();
+      return result;
+    } catch (e) {
+      // Handle the error appropriately
+      if (e.toString().contains('Token invalide')) {
+        _errorMessage = 'Token invalide';
+      } else if (e.toString().contains('Le token a expiré')) {
+        _errorMessage = 'Le token a expiré';
+      } else if (e
+          .toString()
+          .contains('Les mots de passe ne correspondent pas')) {
+        _errorMessage = 'Les mots de passe ne correspondent pas';
+      } else if (e
+          .toString()
+          .contains('Le mot de passe doit contenir au moins 8 caractères')) {
+        _errorMessage = 'Le mot de passe doit contenir au moins 8 caractères';
+      } else {
+        _errorMessage = 'Une erreur est survenue';
+      }
+      notifyListeners();
+      Timer(Duration(seconds: 10), () {
+        _errorMessage = null;
+        notifyListeners();
+      });
+      return false;
     }
   }
 }

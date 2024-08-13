@@ -7,14 +7,15 @@ import 'package:sav_project/providers/notifications_provider.dart';
 import 'package:sav_project/providers/auth_provider.dart';
 import 'package:sav_project/providers/services_provider.dart';
 import 'package:sav_project/providers/user_provider.dart';
-import 'package:sav_project/screens/account_confirmation/account_confirmation.dart';
 import 'package:sav_project/screens/account_confirmation/confirmation_failure.dart';
 import 'package:sav_project/screens/account_confirmation/confirmation_success.dart';
+import 'package:sav_project/screens/auth/reset_password_form.dart';
 import 'package:sav_project/screens/layout.dart';
 import 'package:sav_project/screens/auth/login.dart';
-import 'package:sav_project/screens/auth/signUp.dart';
 import 'package:sav_project/theme/colors.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:uni_links/uni_links.dart';
+import 'dart:async';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -40,8 +41,65 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  StreamSubscription<String?>? _sub;
+  String? initialLink;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initUniLinks();
+    });
+  }
+
+  Future<void> _initUniLinks() async {
+    try {
+      initialLink = await getInitialLink();
+      if (initialLink != null) {
+        _handleLink(initialLink!);
+      }
+      _sub = linkStream.listen((String? link) {
+        if (link != null) {
+          _handleLink(link);
+        }
+      }, onError: (err) {
+        print('Error listening for links: $err');
+      });
+    } catch (e) {
+      print('Failed to get initial link: $e');
+    }
+  }
+
+  void _handleLink(String link) async {
+    final uri = Uri.parse(link);
+    if (uri.path == '/verify') {
+      final token = uri.queryParameters['token'];
+      final email = uri.queryParameters['email'];
+      if (token != null && email != null) {
+        navigatorKey.currentState?.push(
+          MaterialPageRoute(
+            builder: (context) =>
+                EmailVerificationScreen(token: token, email: email),
+          ),
+        );
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _sub?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +123,32 @@ class MyApp extends StatelessWidget {
           print(authProvider.user?.id);
         }
 
+        Widget mainWidget;
+
+        if (initialLink != null) {
+          final uri = Uri.parse(initialLink!);
+          if (uri.path == '/verify') {
+            final token = uri.queryParameters['token'];
+            final email = uri.queryParameters['email'];
+            if (token != null && email != null) {
+              mainWidget = EmailVerificationScreen(token: token, email: email);
+            } else {
+              mainWidget = isLoggedIn ? Layout() : Login();
+            }
+          } else if (uri.path == '/reset-password') {
+            final token = uri.queryParameters['token'];
+            if (token != null) {
+              mainWidget = ResetPasswordForm(token: token);
+            } else {
+              mainWidget = isLoggedIn ? Layout() : Login();
+            }
+          } else {
+            mainWidget = isLoggedIn ? Layout() : Login();
+          }
+        } else {
+          mainWidget = isLoggedIn ? Layout() : Login();
+        }
+
         return GraphQLProvider(
           client: GraphqlClient.client(context),
           child: MaterialApp(
@@ -80,10 +164,80 @@ class MyApp extends StatelessWidget {
               ),
             ),
             debugShowCheckedModeBanner: false,
-            home: isLoggedIn ? Layout() : Login(),
+            home: Builder(builder: (context) {
+              return mainWidget;
+            }),
           ),
         );
       },
+    );
+  }
+}
+
+class EmailVerificationScreen extends StatefulWidget {
+  final String token;
+  final String email;
+
+  EmailVerificationScreen({required this.token, required this.email});
+
+  @override
+  State<EmailVerificationScreen> createState() =>
+      _EmailVerificationScreenState();
+}
+
+class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _verifyEmail();
+  }
+
+  Future<void> _verifyEmail() async {
+    try {
+      print('Verifying email with token: ${widget.token}');
+      bool isVerified = await context
+          .read<AuthProvider>()
+          .verifyEmail(context, widget.token, widget.email);
+      print('Email verification result: $isVerified');
+
+      if (isVerified) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ConfirmationSuccess(),
+          ),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ConfirmationFailure(),
+          ),
+        );
+      }
+    } catch (error) {
+      print('Error during email verification: $error');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ConfirmationFailure(),
+        ),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: _isLoading ? CircularProgressIndicator() : Container(),
+      ),
     );
   }
 }
