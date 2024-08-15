@@ -13,3 +13,19 @@ mutation createVehicule($input: CreateVehiculeInput!) {
   }
 }
 ''';
+
+const String updateVehicule = r'''
+mutation updateVehicule($updateVehiculeInput: UpdateVehiculeInput!, $id: string!) {
+  updateVehicule(updateVehiculeInput: $updateVehiculeInput, id: $id) {
+    id
+    marque
+    modele
+    numChassis
+    type
+    immatriculation
+    annee
+    couleur
+    kilometrage
+  }
+}
+''';
