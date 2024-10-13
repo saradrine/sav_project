@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sav_project/enum/sexe.dart';
+import 'package:sav_project/providers/auth_provider.dart';
 import 'package:sav_project/screens/auth/login.dart';
 import 'package:sav_project/theme/colors.dart';
 import 'package:sav_project/widgets/field_input.dart' as FieldInput;
@@ -16,6 +19,21 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   bool _obscureText = true;
   bool _obscureConfirmText = true;
+  final TextEditingController nomController = TextEditingController();
+  final TextEditingController prenomController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController cinController = TextEditingController();
+  final TextEditingController telephoneController = TextEditingController();
+  final TextEditingController emploiController = TextEditingController();
+  final TextEditingController adresseController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final ScrollController _scrollController = ScrollController();
+
+  Sexe _selectedGender = Sexe.MASCULIN;
+  DateTime _selectedDateOfBirth = DateTime.now();
 
   void _toggleVisibility() {
     setState(() {
@@ -33,6 +51,7 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,8 +63,6 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Widget _buildSignUpForm(BuildContext context) {
     return Form(
@@ -68,7 +85,32 @@ class _SignUpState extends State<SignUp> {
                   title: 'Bienvenue!',
                   subtitle: 'Créez un compte pour continuer',
                 ),
-                SizedBox(height: 40),
+                Consumer<AuthProvider>(builder: (context, authProvider, child) {
+                  if (authProvider.errorMessage != null) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      _scrollController.animateTo(
+                        0.0,
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                      );
+                    });
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          authProvider.errorMessage!,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    );
+                  }
+                  return SizedBox(height: 40);
+                }),
                 _buildLastNameField(context),
                 SizedBox(height: 20),
                 _buildFirstNameField(context),
@@ -76,6 +118,8 @@ class _SignUpState extends State<SignUp> {
                 _buildEmailField(context),
                 SizedBox(height: 20),
                 _buildNumTelField(context),
+                SizedBox(height: 20),
+                _buildCinField(context),
                 SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -105,11 +149,42 @@ class _SignUpState extends State<SignUp> {
                 SizedBox(height: 50),
                 AuthButton(
                   text: 'S’inscrire',
-                  onPressed: () {
+                  onPressed: () async {
+                    final nom = nomController.text;
+                    final prenom = prenomController.text;
+                    final email = emailController.text;
+                    final telephone = telephoneController.text;
+                    final cin = cinController.text;
+                    final emploi = emploiController.text;
+                    final adresse = adresseController.text;
+                    final password = passwordController.text;
+
                     final isValid = _formKey.currentState?.validate();
+                    print("Form validation result: $isValid");
+
                     if (isValid == true) {
-                      // If the form is valid, proceed with the submission or further processing
-                      print("Form is valid! Proceed with submission.");
+                      final cinInt = int.parse(cin);
+                      await Provider.of<AuthProvider>(context, listen: false)
+                          .register(
+                              context,
+                              nom,
+                              prenom,
+                              email,
+                              password,
+                              cinInt,
+                              telephone,
+                              adresse,
+                              _selectedGender,
+                              _selectedDateOfBirth,
+                              emploi);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Login(),
+                        ),
+                      );
+                    } else {
+                      print("Form is invalid! Cannot proceed with submission.");
                     }
                   },
                 ),
@@ -135,6 +210,7 @@ class _SignUpState extends State<SignUp> {
   }
 
   Widget _buildLastNameField(BuildContext context) => AuthTextField(
+        controller: nomController,
         label: "Nom",
         hintText: "Nestor",
         iconPath: 'assets/icons/user.png',
@@ -142,6 +218,7 @@ class _SignUpState extends State<SignUp> {
       );
 
   Widget _buildFirstNameField(BuildContext context) => AuthTextField(
+        controller: prenomController,
         label: "Prénom",
         hintText: "François",
         iconPath: 'assets/icons/user.png',
@@ -149,6 +226,7 @@ class _SignUpState extends State<SignUp> {
       );
 
   Widget _buildEmailField(BuildContext context) => AuthTextField(
+        controller: emailController,
         label: "Adresse mail",
         hintText: "user@user.com",
         iconPath: 'assets/icons/mail.png',
@@ -163,11 +241,20 @@ class _SignUpState extends State<SignUp> {
       );
 
   Widget _buildNumTelField(BuildContext context) => AuthTextField(
+        controller: telephoneController,
         label: "Numéro de téléphone",
         hintText: "+216 55 555 555",
         iconPath: 'assets/icons/mobile-phone.png',
         validatorMessage: 'Numéro de téléphone obligatoire',
         textInputType: TextInputType.phone,
+      );
+
+  Widget _buildCinField(BuildContext context) => AuthTextField(
+        controller: cinController,
+        label: "CIN",
+        hintText: "12345678",
+        iconPath: 'assets/icons/mobile-phone.png',
+        validatorMessage: 'CIN obligatoire',
       );
 
   Widget _buildGenderField(BuildContext context) {
@@ -177,6 +264,11 @@ class _SignUpState extends State<SignUp> {
       items: ['Féminin', 'Masculin'],
       borderRadius: 50,
       applyBoxShadow: false,
+      // onChanged: (value) {
+      //   setState(() {
+      //     _selectedGender = value;
+      //   });
+      // },
     );
   }
 
@@ -189,10 +281,16 @@ class _SignUpState extends State<SignUp> {
       width: 25,
       borderRadius: 50,
       applyBoxShadow: false,
+      // onChanged: (value) {
+      //   setState(() {
+      //     _selectedDateOfBirth = value;
+      //   });
+      // },
     );
   }
 
   Widget _buildEmploiField(BuildContext context) => AuthTextField(
+        controller: emploiController,
         label: "Emploi",
         hintText: "Ingénieur",
         iconPath: 'assets/icons/suitcase.png',
@@ -200,6 +298,7 @@ class _SignUpState extends State<SignUp> {
       );
 
   Widget _buildAdresseField(BuildContext context) => AuthTextField(
+        controller: adresseController,
         label: "Adresse",
         hintText: "rue --- ben arous, Tunisie",
         iconPath: 'assets/icons/gps-navigation.png',
@@ -208,6 +307,7 @@ class _SignUpState extends State<SignUp> {
       );
 
   Widget _buildPasswordField(BuildContext context) => AuthTextField(
+        controller: passwordController,
         label: "Mot de passe",
         hintText: "tapez votre mot de passe",
         iconPath: 'assets/icons/padlock.png',
@@ -227,6 +327,7 @@ class _SignUpState extends State<SignUp> {
       );
 
   Widget _buildConfirmPasswordField(BuildContext context) => AuthTextField(
+        controller: confirmPasswordController,
         label: "Confirmez le mot de passe",
         hintText: "confirmez votre mot de passe",
         iconPath: 'assets/icons/padlock.png',
@@ -244,6 +345,14 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
         ),
-        validatorMessage: 'Confirmation du mot de passe obligatoire',
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Confirmation du mot de passe obligatoire';
+          }
+          if (value != passwordController.text) {
+            return 'Les mots de passe ne correspondent pas';
+          }
+          return null;
+        },
       );
 }

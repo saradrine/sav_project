@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sav_project/models/user.dart';
+import 'package:sav_project/providers/auth_provider.dart';
+import 'package:sav_project/providers/user_provider.dart';
 import 'package:sav_project/theme/colors.dart';
 
 class SideMenu extends StatefulWidget {
@@ -30,6 +34,10 @@ class _SideMenuState extends State<SideMenu> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = context.watch<UserProvider>().user;
+    final prenom = user?.prenom ?? '';
+    final nom = user?.nom ?? '';
+    final email = user?.email ?? '';
     return ClipRRect(
       borderRadius: BorderRadius.horizontal(
         right: Radius.circular(25),
@@ -51,8 +59,8 @@ class _SideMenuState extends State<SideMenu> {
                         height: 40,
                       ),
                       InfoCard(
-                        name: 'Rym Drine',
-                        email: 'foulen@foulen.com',
+                        name: '$prenom $nom',
+                        email: email,
                       ),
                       Flexible(
                         child: Column(
@@ -90,11 +98,13 @@ class _SideMenuState extends State<SideMenu> {
                       ListElement(
                         icon: 'logout.png',
                         title: 'Déconnexion',
-                        press: () {
+                        press: () async {
                           setState(() {
                             selectedMenu = 'Déconnexion';
                           });
-                          // Navigator.pushNamed(context, '/');
+                          await Provider.of<AuthProvider>(context,
+                                  listen: false)
+                              .logout(context);
                         },
                         isActive: widget.selectedMenu == 'Déconnexion',
                         // isActive: selectedMenu == 'Déconnexion',

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sav_project/providers/auth_provider.dart';
 import 'package:sav_project/screens/auth/signUp.dart';
 import 'package:sav_project/theme/colors.dart';
 import '../../widgets/auth/auth_button.dart';
@@ -6,6 +8,7 @@ import '../../widgets/auth/auth_prompt.dart';
 import '../../widgets/auth/auth_text_field.dart';
 import '../../widgets/auth/header_auth.dart';
 import '../../widgets/auth/welcome_text.dart';
+import 'reset_password.dart';
 // Constants
 
 //Button
@@ -20,6 +23,9 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool _obscureText = true;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _toggleVisibility() {
     setState(() {
@@ -43,8 +49,6 @@ class _LoginState extends State<Login> {
     );
   }
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   Widget _buildLoginForm(BuildContext context) {
     return Container(
       color: AppColors.kBaseColor,
@@ -56,41 +60,69 @@ class _LoginState extends State<Login> {
               topRight: Radius.circular(50),
             ),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(height: 30),
-              WelcomeTextAuth(
-                  title: 'Bienvenue!',
-                  subtitle: 'Inscrivez-vous pour commencer'),
-              SizedBox(height: 40),
-              _buildEmailField(context),
-              SizedBox(height: 20),
-              _buildPasswordField(context),
-              _buildForgotPasswordButton(),
-              SizedBox(height: 30),
-              AuthButton(
-                text: 'Se connecter',
-                onPressed: () {
-                  final isValid = _formKey.currentState?.validate();
-                  if (isValid == true) {
-                    // If the form is valid, proceed with the submission or further processing
-                    print("Form is valid! Proceed with submission.");
-                  }
-                },
-              ),
-              AuthPrompt(
-                  sentence: 'Vous débutez avec XXX?',
-                  action: 'S’inscrire',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SignUp(),
-                      ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 30),
+                WelcomeTextAuth(
+                    title: 'Bienvenue!',
+                    subtitle: 'Inscrivez-vous pour commencer'),
+                Consumer<AuthProvider>(builder: (context, authProvider, child) {
+                  if (authProvider.errorMessage != null) {
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          authProvider.errorMessage!,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
                     );
-                  }),
-            ],
+                  }
+                  return SizedBox(height: 40);
+                }),
+                _buildEmailField(context),
+                SizedBox(height: 20),
+                _buildPasswordField(context),
+                _buildForgotPasswordButton(),
+                SizedBox(height: 30),
+                AuthButton(
+                  text: 'Se connecter',
+                  onPressed: () async {
+                    final email = emailController.text;
+                    final password = passwordController.text;
+
+                    final isValid = _formKey.currentState?.validate();
+                    print("Form validation result: $isValid");
+
+                    if (isValid == true) {
+                      await Provider.of<AuthProvider>(context, listen: false)
+                          .login(context, email, password);
+                    } else {
+                      print("Form is invalid! Cannot proceed with submission.");
+                    }
+                  },
+                ),
+                AuthPrompt(
+                    sentence: 'Vous débutez avec XXX?',
+                    action: 'S’inscrire',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SignUp(),
+                        ),
+                      );
+                    }),
+              ],
+            ),
           ),
         ),
       ),
@@ -98,6 +130,7 @@ class _LoginState extends State<Login> {
   }
 
   Widget _buildEmailField(BuildContext context) => AuthTextField(
+        controller: emailController,
         label: "Adresse mail",
         hintText: "user@user.com",
         iconPath: 'assets/icons/mail.png',
@@ -112,6 +145,7 @@ class _LoginState extends State<Login> {
       );
 
   Widget _buildPasswordField(BuildContext context) => AuthTextField(
+        controller: passwordController,
         label: "Mot de passe",
         hintText: "tapez votre mot de passe",
         iconPath: 'assets/icons/padlock.png',
@@ -137,7 +171,12 @@ class _LoginState extends State<Login> {
         alignment: Alignment.centerRight,
         child: TextButton(
           onPressed: () {
-            // Handle forgotten password
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ResetPassword(),
+              ),
+            );
           },
           child: Text(
             'Mot de passe oublié?',

@@ -168,10 +168,10 @@ class _VehiculeElementState extends State<VehiculeElement> {
                   text: widget.vehicule.kilometrage.toString() ?? '',
                 ),
                 SizedBox(height: 4),
-                // IconTextRow(
-                //   iconPath: 'assets/icons/car.png',
-                //   text: widget.vehicule.dernierVidange.toString(),
-                // ),
+                IconTextRow(
+                  iconPath: 'assets/icons/car.png',
+                  text: widget.vehicule.dernierVidange.toString(),
+                ),
               ],
             ),
           ],

@@ -1,15 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:sav_project/graphql/queries/service_queries.dart';
 import 'package:sav_project/models/service.dart';
 import 'package:sav_project/graphql/graphql_client.dart';
 
 class ServicesService {
-  Future<List<Service>> fetchServices() async {
+  Future<List<Service>> fetchServices(BuildContext context) async {
     final QueryOptions options = QueryOptions(
       document: gql(getServices),
     );
 
-    final QueryResult result = await GraphqlClient.client.value.query(options);
+    final QueryResult result = await GraphqlClient.client(context).value.query(options);
 
     if (result.hasException) {
       print('Error: ${result.exception.toString()}');

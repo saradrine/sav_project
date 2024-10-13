@@ -7,9 +7,9 @@ class ServicesProvider extends ChangeNotifier {
 
   List<Service>? get services => _services;
 
-  Future<void> fetchServices() async {
+  Future<void> fetchServices(BuildContext context) async {
     try {
-      _services = await ServicesService().fetchServices();
+      _services = await ServicesService().fetchServices(context);
       notifyListeners();
     } catch (e) {
       print('Error fetching services: $e');
